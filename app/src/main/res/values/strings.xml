@@ -3,4 +3,6 @@
     <string name="movies_menu_title">Movies</string>
     <string name="favorites_menu_title">Favorites</string>
     <string name="settings_menu_title">Settings</string>
+    <string name="plug_string">bla bla bla</string>
+    <string name="movie_item_image_view_content_description">Poster</string>
 </resources>
