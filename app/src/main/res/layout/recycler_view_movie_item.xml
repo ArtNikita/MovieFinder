@@ -22,14 +22,14 @@
                 android:id="@+id/movie_item_image_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/plug_poster_image"
-                android:contentDescription="@string/movie_item_image_view_content_description" />
+                android:contentDescription="@string/movie_item_image_view_content_description"
+                android:src="@drawable/plug_poster_image" />
         </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:id="@+id/movie_item_name_text_view"
             style="@style/MovieItemTextView.Name"
-            android:text="@string/plug_string"/>
+            android:text="@string/plug_string" />
 
         <TextView
             android:id="@+id/movie_item_description_text_view"

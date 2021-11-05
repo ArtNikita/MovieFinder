@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="64dp"
         android:gravity="center"
-        android:text="Settings fragment"
+        android:text="@string/settings_fragment_text_view_plug"
         android:textSize="40sp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
