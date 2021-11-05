@@ -6,6 +6,7 @@ class MainContract {
         fun openMoviesScreen()
         fun openFavoritesScreen()
         fun openSettingsScreen()
+        fun initStartScreen()
     }
 
     interface Presenter {
@@ -15,5 +16,6 @@ class MainContract {
         fun onMoviesMenuSelected()
         fun onFavoritesMenuSelected()
         fun onSettingsMenuSelected()
+        fun onViewIsReady()
     }
 }

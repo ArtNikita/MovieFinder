@@ -22,4 +22,8 @@ class MainPresenter : MainContract.Presenter {
     override fun onSettingsMenuSelected() {
         view?.openSettingsScreen()
     }
+
+    override fun onViewIsReady() {
+        view?.initStartScreen()
+    }
 }
