@@ -5,6 +5,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ru.nikitaartamonov.moviefinder.R
 import ru.nikitaartamonov.moviefinder.databinding.ActivityMainBinding
+import ru.nikitaartamonov.moviefinder.ui.pages.favorites.FavoritesFragment
+import ru.nikitaartamonov.moviefinder.ui.pages.movies.MoviesFragment
+import ru.nikitaartamonov.moviefinder.ui.pages.settings.SettingsFragment
 
 class MainActivity : AppCompatActivity(), MainContract.View {
 
@@ -41,15 +44,24 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun openMoviesScreen() {
-        Toast.makeText(this, "Movies", Toast.LENGTH_SHORT).show()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(binding.fragmentContainerFrameLayout.id, MoviesFragment())
+            .commit()
     }
 
     override fun openFavoritesScreen() {
-        Toast.makeText(this, "Favorites", Toast.LENGTH_SHORT).show()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(binding.fragmentContainerFrameLayout.id, FavoritesFragment())
+            .commit()
     }
 
     override fun openSettingsScreen() {
-        Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(binding.fragmentContainerFrameLayout.id, SettingsFragment())
+            .commit()
     }
 
     override fun onRetainCustomNonConfigurationInstance(): Any {
