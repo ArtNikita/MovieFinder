@@ -1,7 +1,9 @@
 package ru.nikitaartamonov.moviefinder.ui.main
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isEmpty
 import ru.nikitaartamonov.moviefinder.R
 import ru.nikitaartamonov.moviefinder.databinding.ActivityMainBinding
 import ru.nikitaartamonov.moviefinder.ui.pages.favorites.FavoritesFragment
@@ -44,17 +46,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun initStartScreen() {
-        when (binding.bottomNavigationView.selectedItemId) {
-            R.id.movies_menu -> {
-                openMoviesScreen()
-            }
-            R.id.favourites_menu -> {
-                openFavoritesScreen()
-            }
-            R.id.settings_menu -> {
-                openSettingsScreen()
-            }
-        }
+        if (supportFragmentManager.fragments.isEmpty()) openMoviesScreen()
     }
 
     override fun openMoviesScreen() {
