@@ -31,14 +31,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/movie_item_image_view_content_description"
-                android:scaleType="centerCrop"
-                android:src="@drawable/plug_poster_image" />
+                android:scaleType="centerCrop" />
         </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:id="@+id/movie_item_name_text_view"
             style="@style/MovieItemTextView.Name"
-            android:text="@string/plug_string"
             app:layout_constraintEnd_toEndOf="@id/poster_image_view_container_card_view"
             app:layout_constraintStart_toStartOf="@id/poster_image_view_container_card_view"
             app:layout_constraintTop_toBottomOf="@id/poster_image_view_container_card_view" />
@@ -46,7 +44,6 @@
         <TextView
             android:id="@+id/movie_item_description_text_view"
             style="@style/MovieItemTextView.Description"
-            android:text="@string/plug_string"
             app:layout_constraintEnd_toEndOf="@id/movie_item_name_text_view"
             app:layout_constraintStart_toStartOf="@id/movie_item_name_text_view"
             app:layout_constraintTop_toBottomOf="@id/movie_item_name_text_view" />

@@ -21,7 +21,7 @@ class App : Application() {
         val tempMovieEntity = MovieEntity(
             id = "0",
             imageRes = "plug_poster_image.png",
-            name = "Dude",
+            name = "The big Lebowski",
             description = "Awesome movie about dude.",
             year = 1998,
             imdbRating = 8.1f,

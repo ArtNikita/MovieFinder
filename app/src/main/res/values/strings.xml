@@ -3,10 +3,10 @@
     <string name="movies_menu_title">Movies</string>
     <string name="favorites_menu_title">Favorites</string>
     <string name="settings_menu_title">Settings</string>
-    <string name="plug_string">bla bla bla</string>
     <string name="movie_item_image_view_content_description">Poster</string>
-    <string name="favorites_fragment_text_view_plug">Favorites fragment</string>
     <string name="movies_fragment_text_view_plug">Movies fragment</string>
     <string name="settings_fragment_text_view_plug">Settings fragment</string>
     <string name="default_movie_poster_ratio">27:40</string>
+    <string name="imdb">IMDB</string>
+    <string name="kinopoisk">KP</string>
 </resources>
