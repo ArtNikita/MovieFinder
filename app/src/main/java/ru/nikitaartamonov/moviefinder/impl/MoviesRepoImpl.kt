@@ -6,17 +6,20 @@ import ru.nikitaartamonov.moviefinder.domain.MoviesRepo
 class MoviesRepoImpl(
     inputMoviesList: List<MovieEntity> = mutableListOf()
 ) : MoviesRepo {
-    override val moviesSet: MutableSet<MovieEntity> = inputMoviesList.toMutableSet()
+    override val moviesList: MutableList<MovieEntity> = inputMoviesList.toMutableList()
+
+    override val size: Int
+        get() = moviesList.size
 
     override fun addMovie(movieEntity: MovieEntity) {
-        moviesSet.add(movieEntity)
+        if (movieEntity !in moviesList) moviesList.add(movieEntity)
     }
 
     override fun deleteMovie(id: String): Boolean {
-        val tempSize = moviesSet.size
-        moviesSet.remove(getMovie(id))
-        return tempSize != moviesSet.size
+        val tempSize = moviesList.size
+        moviesList.remove(getMovie(id))
+        return tempSize != moviesList.size
     }
 
-    override fun getMovie(id: String): MovieEntity? = moviesSet.find { it.id == id }
+    override fun getMovie(id: String): MovieEntity? = moviesList.find { it.id == id }
 }

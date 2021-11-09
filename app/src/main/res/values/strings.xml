@@ -8,4 +8,5 @@
     <string name="favorites_fragment_text_view_plug">Favorites fragment</string>
     <string name="movies_fragment_text_view_plug">Movies fragment</string>
     <string name="settings_fragment_text_view_plug">Settings fragment</string>
+    <string name="default_movie_poster_ratio">27:40</string>
 </resources>
