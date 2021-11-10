@@ -8,6 +8,7 @@ import ru.nikitaartamonov.moviefinder.databinding.ActivityMainBinding
 import ru.nikitaartamonov.moviefinder.ui.pages.favorites.FavoritesFragment
 import ru.nikitaartamonov.moviefinder.ui.pages.movies.MoviesFragment
 import ru.nikitaartamonov.moviefinder.ui.pages.settings.SettingsFragment
+import java.lang.IllegalStateException
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,15 +29,15 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.movies_menu -> {
-                    viewModel.onMoviesMenuSelected()
+                    viewModel.onBottomNavigationViewItemSelected(Screens.MOVIES)
                     true
                 }
                 R.id.favourites_menu -> {
-                    viewModel.onFavoritesMenuSelected()
+                    viewModel.onBottomNavigationViewItemSelected(Screens.FAVORITES)
                     true
                 }
                 R.id.settings_menu -> {
-                    viewModel.onSettingsMenuSelected()
+                    viewModel.onBottomNavigationViewItemSelected(Screens.SETTINGS)
                     true
                 }
                 else -> {
@@ -47,14 +48,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        viewModel.openMoviesScreenLiveData.observe(this) {
-            openMoviesScreen()
-        }
-        viewModel.openFavoritesScreenLiveData.observe(this) {
-            openFavoritesScreen()
-        }
-        viewModel.openSettingsScreenLiveData.observe(this) {
-            openSettingsScreen()
+        viewModel.openScreenLiveData.observe(this) {
+            when (it) {
+                Screens.MOVIES -> openMoviesScreen()
+                Screens.FAVORITES -> openFavoritesScreen()
+                Screens.SETTINGS -> openSettingsScreen()
+                else -> throw IllegalStateException("Unknown screen launched")
+            }
         }
         viewModel.initStartScreenLiveData.observe(this) {
             if (supportFragmentManager.fragments.isEmpty()) openMoviesScreen()
