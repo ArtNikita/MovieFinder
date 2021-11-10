@@ -1,40 +1,42 @@
 package ru.nikitaartamonov.moviefinder.ui.main
 
 import android.os.Bundle
-import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isEmpty
 import ru.nikitaartamonov.moviefinder.R
 import ru.nikitaartamonov.moviefinder.databinding.ActivityMainBinding
 import ru.nikitaartamonov.moviefinder.ui.pages.favorites.FavoritesFragment
 import ru.nikitaartamonov.moviefinder.ui.pages.movies.MoviesFragment
 import ru.nikitaartamonov.moviefinder.ui.pages.settings.SettingsFragment
 
-class MainActivity : AppCompatActivity(), MainContract.View {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var presenter: MainContract.Presenter
+    private val viewModel: MainContract.ViewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        presenter = lastCustomNonConfigurationInstance as MainContract.Presenter? ?: MainPresenter()
-        presenter.attach(this)
+        initOnClickListeners()
+        initViewModel()
+        viewModel.onViewIsReady()
+    }
 
+    private fun initOnClickListeners() {
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.movies_menu -> {
-                    presenter.onMoviesMenuSelected()
+                    viewModel.onMoviesMenuSelected()
                     true
                 }
                 R.id.favourites_menu -> {
-                    presenter.onFavoritesMenuSelected()
+                    viewModel.onFavoritesMenuSelected()
                     true
                 }
                 R.id.settings_menu -> {
-                    presenter.onSettingsMenuSelected()
+                    viewModel.onSettingsMenuSelected()
                     true
                 }
                 else -> {
@@ -42,40 +44,41 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                 }
             }
         }
-        presenter.onViewIsReady()
     }
 
-    override fun initStartScreen() {
-        if (supportFragmentManager.fragments.isEmpty()) openMoviesScreen()
+    private fun initViewModel() {
+        viewModel.openMoviesScreenLiveData.observe(this) {
+            openMoviesScreen()
+        }
+        viewModel.openFavoritesScreenLiveData.observe(this) {
+            openFavoritesScreen()
+        }
+        viewModel.openSettingsScreenLiveData.observe(this) {
+            openSettingsScreen()
+        }
+        viewModel.initStartScreenLiveData.observe(this) {
+            if (supportFragmentManager.fragments.isEmpty()) openMoviesScreen()
+        }
     }
 
-    override fun openMoviesScreen() {
+    private fun openMoviesScreen() {
         supportFragmentManager
             .beginTransaction()
             .replace(binding.fragmentContainerFrameLayout.id, MoviesFragment())
             .commit()
     }
 
-    override fun openFavoritesScreen() {
+    private fun openFavoritesScreen() {
         supportFragmentManager
             .beginTransaction()
             .replace(binding.fragmentContainerFrameLayout.id, FavoritesFragment())
             .commit()
     }
 
-    override fun openSettingsScreen() {
+    private fun openSettingsScreen() {
         supportFragmentManager
             .beginTransaction()
             .replace(binding.fragmentContainerFrameLayout.id, SettingsFragment())
             .commit()
-    }
-
-    override fun onRetainCustomNonConfigurationInstance(): Any {
-        return presenter
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.detach()
     }
 }

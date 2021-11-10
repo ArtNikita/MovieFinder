@@ -1,17 +1,14 @@
 package ru.nikitaartamonov.moviefinder.ui.main
 
+import androidx.lifecycle.LiveData
+
 class MainContract {
 
-    interface View {
-        fun openMoviesScreen()
-        fun openFavoritesScreen()
-        fun openSettingsScreen()
-        fun initStartScreen()
-    }
-
-    interface Presenter {
-        fun attach(view: View)
-        fun detach()
+    interface ViewModel {
+        val openMoviesScreenLiveData: LiveData<Boolean>
+        val openFavoritesScreenLiveData: LiveData<Boolean>
+        val openSettingsScreenLiveData: LiveData<Boolean>
+        val initStartScreenLiveData: LiveData<Boolean>
 
         fun onMoviesMenuSelected()
         fun onFavoritesMenuSelected()
