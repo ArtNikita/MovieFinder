@@ -5,10 +5,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import ru.nikitaartamonov.moviefinder.R
 import ru.nikitaartamonov.moviefinder.databinding.ActivityMainBinding
+import ru.nikitaartamonov.moviefinder.domain.Screens
 import ru.nikitaartamonov.moviefinder.ui.pages.favorites.FavoritesFragment
 import ru.nikitaartamonov.moviefinder.ui.pages.movies.MoviesFragment
 import ru.nikitaartamonov.moviefinder.ui.pages.settings.SettingsFragment
-import java.lang.IllegalStateException
 
 class MainActivity : AppCompatActivity() {
 

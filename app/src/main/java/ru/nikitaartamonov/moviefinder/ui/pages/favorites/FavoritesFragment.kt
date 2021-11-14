@@ -21,6 +21,17 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
         super.onViewCreated(view, savedInstanceState)
 
         initRecyclerView()
+        initViewModel()
+    }
+
+    private fun initViewModel() {
+        viewModel.openMovieDescriptionLiveData.observe(viewLifecycleOwner){ movieEntity ->
+            openMovieDescription(movieEntity)
+        }
+    }
+
+    private fun openMovieDescription(movieEntity: MovieEntity) {
+        TODO("Not yet implemented")
     }
 
     private fun initRecyclerView() {

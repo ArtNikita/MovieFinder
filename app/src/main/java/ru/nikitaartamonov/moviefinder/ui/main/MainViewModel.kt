@@ -3,6 +3,7 @@ package ru.nikitaartamonov.moviefinder.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import ru.nikitaartamonov.moviefinder.domain.Screens
 
 class MainViewModel : ViewModel(), MainContract.ViewModel {
     private val _openScreenLiveData = MutableLiveData<Screens>()
