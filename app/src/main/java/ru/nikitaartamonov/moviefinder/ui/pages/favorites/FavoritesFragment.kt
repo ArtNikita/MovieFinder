@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.nikitaartamonov.moviefinder.R
 import ru.nikitaartamonov.moviefinder.data.App
+import ru.nikitaartamonov.moviefinder.data.app
 import ru.nikitaartamonov.moviefinder.databinding.FragmentFavoritesBinding
 import ru.nikitaartamonov.moviefinder.domain.MovieEntity
 
@@ -38,7 +39,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
             }
         }
         binding.favoritesFragmentRecyclerView.adapter = adapter
-        adapter.setData((requireActivity().application as App).moviesRepo)
+        adapter.setData(requireActivity().app.moviesRepo)
     }
 
     companion object {

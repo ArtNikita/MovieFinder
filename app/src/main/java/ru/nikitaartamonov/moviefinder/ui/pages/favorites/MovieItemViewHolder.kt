@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.nikitaartamonov.moviefinder.R
+import ru.nikitaartamonov.moviefinder.data.app
 import ru.nikitaartamonov.moviefinder.databinding.RecyclerViewMovieItemBinding
 import ru.nikitaartamonov.moviefinder.domain.MovieEntity
 
