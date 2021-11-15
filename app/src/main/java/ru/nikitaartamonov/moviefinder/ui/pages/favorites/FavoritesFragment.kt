@@ -4,19 +4,36 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.nikitaartamonov.moviefinder.R
-import ru.nikitaartamonov.moviefinder.data.App
+import ru.nikitaartamonov.moviefinder.data.app
 import ru.nikitaartamonov.moviefinder.databinding.FragmentFavoritesBinding
+import ru.nikitaartamonov.moviefinder.domain.MovieEntity
+import ru.nikitaartamonov.moviefinder.ui.pages.movie_description.MovieDescriptionActivity
 
 class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     private val binding: FragmentFavoritesBinding by viewBinding(FragmentFavoritesBinding::bind)
+    private val viewModel: FavoritesContract.ViewModel by viewModels<FavoritesViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initRecyclerView()
+        initViewModel()
+    }
+
+    private fun initViewModel() {
+        viewModel.openMovieDescriptionLiveData.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let { movieEntity ->
+                openMovieDescription(movieEntity)
+            }
+        }
+    }
+
+    private fun openMovieDescription(movieEntity: MovieEntity) {
+        MovieDescriptionActivity.launch(requireContext(), movieEntity)
     }
 
     private fun initRecyclerView() {
@@ -29,8 +46,13 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
                 }
             )
         val adapter = FavoritesRecyclerViewAdapter()
+        adapter.listener = object : FavoritesContract.OnMovieItemClickListener {
+            override fun onClick(movieEntity: MovieEntity) {
+                viewModel.onItemTouched(movieEntity)
+            }
+        }
         binding.favoritesFragmentRecyclerView.adapter = adapter
-        adapter.setData((requireActivity().application as App).moviesRepo)
+        adapter.setData(requireActivity().app.moviesRepo)
     }
 
     companion object {

@@ -7,6 +7,7 @@ import ru.nikitaartamonov.moviefinder.impl.MoviesRepoImpl
 
 class FavoritesRecyclerViewAdapter : RecyclerView.Adapter<MovieItemViewHolder>() {
     private var moviesRepo: MoviesRepo = MoviesRepoImpl()
+    lateinit var listener: FavoritesContract.OnMovieItemClickListener
 
     fun setData(moviesRepo: MoviesRepo) {
         this.moviesRepo = moviesRepo
@@ -14,7 +15,7 @@ class FavoritesRecyclerViewAdapter : RecyclerView.Adapter<MovieItemViewHolder>()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieItemViewHolder {
-        return MovieItemViewHolder(parent)
+        return MovieItemViewHolder(parent, listener)
     }
 
     override fun onBindViewHolder(holder: MovieItemViewHolder, position: Int) {

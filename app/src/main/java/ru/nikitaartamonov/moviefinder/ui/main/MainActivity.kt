@@ -8,7 +8,6 @@ import ru.nikitaartamonov.moviefinder.databinding.ActivityMainBinding
 import ru.nikitaartamonov.moviefinder.ui.pages.favorites.FavoritesFragment
 import ru.nikitaartamonov.moviefinder.ui.pages.movies.MoviesFragment
 import ru.nikitaartamonov.moviefinder.ui.pages.settings.SettingsFragment
-import java.lang.IllegalStateException
 
 class MainActivity : AppCompatActivity() {
 
