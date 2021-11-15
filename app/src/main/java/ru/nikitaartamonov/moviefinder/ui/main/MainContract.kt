@@ -1,7 +1,10 @@
 package ru.nikitaartamonov.moviefinder.ui.main
 
 import androidx.lifecycle.LiveData
-import ru.nikitaartamonov.moviefinder.domain.Screens
+
+enum class Screens {
+    MOVIES, FAVORITES, SETTINGS
+}
 
 class MainContract {
 

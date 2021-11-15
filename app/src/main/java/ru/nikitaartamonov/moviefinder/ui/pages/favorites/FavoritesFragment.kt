@@ -8,10 +8,10 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.nikitaartamonov.moviefinder.R
-import ru.nikitaartamonov.moviefinder.data.App
 import ru.nikitaartamonov.moviefinder.data.app
 import ru.nikitaartamonov.moviefinder.databinding.FragmentFavoritesBinding
 import ru.nikitaartamonov.moviefinder.domain.MovieEntity
+import ru.nikitaartamonov.moviefinder.ui.pages.movie_description.MovieDescriptionActivity
 
 class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     private val binding: FragmentFavoritesBinding by viewBinding(FragmentFavoritesBinding::bind)
@@ -25,13 +25,15 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     }
 
     private fun initViewModel() {
-        viewModel.openMovieDescriptionLiveData.observe(viewLifecycleOwner){ movieEntity ->
-            openMovieDescription(movieEntity)
+        viewModel.openMovieDescriptionLiveData.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let { movieEntity ->
+                openMovieDescription(movieEntity)
+            }
         }
     }
 
     private fun openMovieDescription(movieEntity: MovieEntity) {
-        TODO("Not yet implemented")
+        MovieDescriptionActivity.launch(requireContext(), movieEntity)
     }
 
     private fun initRecyclerView() {
