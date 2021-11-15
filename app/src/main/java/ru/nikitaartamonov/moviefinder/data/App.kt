@@ -1,6 +1,7 @@
 package ru.nikitaartamonov.moviefinder.data
 
 import android.app.Application
+import android.content.Context
 import ru.nikitaartamonov.moviefinder.domain.MovieEntity
 import ru.nikitaartamonov.moviefinder.domain.MoviesRepo
 import ru.nikitaartamonov.moviefinder.impl.MoviesRepoImpl
@@ -39,3 +40,6 @@ class App : Application() {
         moviesRepo = MoviesRepoImpl(tempMoviesList)
     }
 }
+
+val Context.app: App
+    get() = applicationContext as App

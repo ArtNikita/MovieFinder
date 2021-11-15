@@ -1,5 +1,9 @@
 package ru.nikitaartamonov.moviefinder.domain
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class MovieEntity(
     val id: String,
     val imageRes: String,
@@ -12,5 +16,4 @@ data class MovieEntity(
     val genre: String,
     val producer: String,
     val durationInMinutes: Int
-) {
-}
+): Parcelable
