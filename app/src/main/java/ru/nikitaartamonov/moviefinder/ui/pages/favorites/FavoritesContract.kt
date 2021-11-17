@@ -10,8 +10,4 @@ class FavoritesContract {
         val openMovieDescriptionLiveData: LiveData<Event<MovieEntity>>
         fun onItemTouched(movieEntity: MovieEntity)
     }
-
-    interface OnMovieItemClickListener {
-        fun onClick(movieEntity: MovieEntity)
-    }
 }

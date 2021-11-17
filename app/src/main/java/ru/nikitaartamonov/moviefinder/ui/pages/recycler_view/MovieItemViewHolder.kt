@@ -1,14 +1,13 @@
-package ru.nikitaartamonov.moviefinder.ui.pages.favorites
+package ru.nikitaartamonov.moviefinder.ui.pages.recycler_view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.nikitaartamonov.moviefinder.R
-import ru.nikitaartamonov.moviefinder.data.app
 import ru.nikitaartamonov.moviefinder.databinding.RecyclerViewMovieItemBinding
 import ru.nikitaartamonov.moviefinder.domain.MovieEntity
 
-class MovieItemViewHolder(parent: ViewGroup, listener: FavoritesContract.OnMovieItemClickListener) :
+class MovieItemViewHolder(parent: ViewGroup, listener: OnMovieItemClickListener) :
     RecyclerView.ViewHolder(
         RecyclerViewMovieItemBinding.inflate(
             LayoutInflater.from(parent.context),

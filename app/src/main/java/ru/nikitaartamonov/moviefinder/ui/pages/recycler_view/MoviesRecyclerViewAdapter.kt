@@ -1,13 +1,13 @@
-package ru.nikitaartamonov.moviefinder.ui.pages.favorites
+package ru.nikitaartamonov.moviefinder.ui.pages.recycler_view
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.nikitaartamonov.moviefinder.domain.MoviesRepo
 import ru.nikitaartamonov.moviefinder.impl.MoviesRepoImpl
 
-class FavoritesRecyclerViewAdapter : RecyclerView.Adapter<MovieItemViewHolder>() {
+class MoviesRecyclerViewAdapter : RecyclerView.Adapter<MovieItemViewHolder>() {
     private var moviesRepo: MoviesRepo = MoviesRepoImpl()
-    lateinit var listener: FavoritesContract.OnMovieItemClickListener
+    lateinit var listener: OnMovieItemClickListener
 
     fun setData(moviesRepo: MoviesRepo) {
         this.moviesRepo = moviesRepo

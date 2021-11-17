@@ -12,6 +12,8 @@ import ru.nikitaartamonov.moviefinder.data.app
 import ru.nikitaartamonov.moviefinder.databinding.FragmentFavoritesBinding
 import ru.nikitaartamonov.moviefinder.domain.MovieEntity
 import ru.nikitaartamonov.moviefinder.ui.pages.movie_description.MovieDescriptionActivity
+import ru.nikitaartamonov.moviefinder.ui.pages.recycler_view.MoviesRecyclerViewAdapter
+import ru.nikitaartamonov.moviefinder.ui.pages.recycler_view.OnMovieItemClickListener
 
 class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     private val binding: FragmentFavoritesBinding by viewBinding(FragmentFavoritesBinding::bind)
@@ -45,8 +47,8 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
                     else -> HORIZONTAL_RECYCLER_VIEW_COLUMNS_COUNT
                 }
             )
-        val adapter = FavoritesRecyclerViewAdapter()
-        adapter.listener = object : FavoritesContract.OnMovieItemClickListener {
+        val adapter = MoviesRecyclerViewAdapter()
+        adapter.listener = object : OnMovieItemClickListener {
             override fun onClick(movieEntity: MovieEntity) {
                 viewModel.onItemTouched(movieEntity)
             }
