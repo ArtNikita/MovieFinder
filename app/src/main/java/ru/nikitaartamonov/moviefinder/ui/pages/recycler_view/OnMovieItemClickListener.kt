@@ -1,7 +1,7 @@
 package ru.nikitaartamonov.moviefinder.ui.pages.recycler_view
 
-import ru.nikitaartamonov.moviefinder.domain.MovieEntity
+import ru.nikitaartamonov.moviefinder.domain.PreviewMovieEntity
 
 interface OnMovieItemClickListener {
-    fun onClick(movieEntity: MovieEntity)
+    fun onClick(movieEntity: PreviewMovieEntity)
 }

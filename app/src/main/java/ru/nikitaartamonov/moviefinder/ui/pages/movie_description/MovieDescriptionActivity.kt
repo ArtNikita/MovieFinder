@@ -7,7 +7,7 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import ru.nikitaartamonov.moviefinder.databinding.ActivityMovieDescriptionBinding
-import ru.nikitaartamonov.moviefinder.domain.MovieEntity
+import ru.nikitaartamonov.moviefinder.domain.PreviewMovieEntity
 
 class MovieDescriptionActivity : AppCompatActivity() {
 
@@ -28,7 +28,7 @@ class MovieDescriptionActivity : AppCompatActivity() {
     companion object {
         private const val MOVIE_ENTITY_INTENT_KEY = "MOVIE_ENTITY_INTENT_KEY"
 
-        fun launch(context: Context, movieEntity: MovieEntity) {
+        fun launch(context: Context, movieEntity: PreviewMovieEntity) {
             val intent = Intent(context, MovieDescriptionActivity::class.java)
             intent.putExtra(MOVIE_ENTITY_INTENT_KEY, movieEntity)
             context.startActivity(intent)

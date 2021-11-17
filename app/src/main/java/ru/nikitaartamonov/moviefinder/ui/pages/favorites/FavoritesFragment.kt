@@ -10,7 +10,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.nikitaartamonov.moviefinder.R
 import ru.nikitaartamonov.moviefinder.data.app
 import ru.nikitaartamonov.moviefinder.databinding.FragmentFavoritesBinding
-import ru.nikitaartamonov.moviefinder.domain.MovieEntity
+import ru.nikitaartamonov.moviefinder.domain.PreviewMovieEntity
 import ru.nikitaartamonov.moviefinder.ui.pages.movie_description.MovieDescriptionActivity
 import ru.nikitaartamonov.moviefinder.ui.pages.recycler_view.MoviesRecyclerViewAdapter
 import ru.nikitaartamonov.moviefinder.ui.pages.recycler_view.OnMovieItemClickListener
@@ -34,8 +34,8 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
         }
     }
 
-    private fun openMovieDescription(movieEntity: MovieEntity) {
-        MovieDescriptionActivity.launch(requireContext(), movieEntity)
+    private fun openMovieDescription(previewMovieEntity: PreviewMovieEntity) {
+        MovieDescriptionActivity.launch(requireContext(), previewMovieEntity)
     }
 
     private fun initRecyclerView() {
@@ -49,7 +49,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
             )
         val adapter = MoviesRecyclerViewAdapter()
         adapter.listener = object : OnMovieItemClickListener {
-            override fun onClick(movieEntity: MovieEntity) {
+            override fun onClick(movieEntity: PreviewMovieEntity) {
                 viewModel.onItemTouched(movieEntity)
             }
         }

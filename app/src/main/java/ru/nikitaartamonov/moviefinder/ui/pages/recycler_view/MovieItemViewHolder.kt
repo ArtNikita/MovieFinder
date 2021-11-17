@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.nikitaartamonov.moviefinder.R
 import ru.nikitaartamonov.moviefinder.databinding.RecyclerViewMovieItemBinding
-import ru.nikitaartamonov.moviefinder.domain.MovieEntity
+import ru.nikitaartamonov.moviefinder.domain.PreviewMovieEntity
 
 class MovieItemViewHolder(parent: ViewGroup, listener: OnMovieItemClickListener) :
     RecyclerView.ViewHolder(
@@ -17,7 +17,7 @@ class MovieItemViewHolder(parent: ViewGroup, listener: OnMovieItemClickListener)
     ) {
 
     private var binding: RecyclerViewMovieItemBinding = RecyclerViewMovieItemBinding.bind(itemView)
-    private lateinit var movieEntity: MovieEntity
+    private lateinit var movieEntity: PreviewMovieEntity
 
     init {
         itemView.setOnClickListener {
@@ -25,14 +25,10 @@ class MovieItemViewHolder(parent: ViewGroup, listener: OnMovieItemClickListener)
         }
     }
 
-    fun bind(movieEntity: MovieEntity) {
+    fun bind(movieEntity: PreviewMovieEntity) {
         this.movieEntity = movieEntity
-        binding.movieItemNameTextView.text = movieEntity.name
-        val shortDescription = "${movieEntity.year} ${
-            itemView.context.getString(R.string.imdb)
-        }: ${movieEntity.imdbRating} ${
-            itemView.context.getString(R.string.kinopoisk)
-        }: ${movieEntity.kpRating}"
+        binding.movieItemNameTextView.text = movieEntity.title
+        val shortDescription = "${movieEntity.release_date}       ${movieEntity.vote_average}"
         binding.movieItemDescriptionTextView.text = shortDescription
         binding.movieItemImageView.setBackgroundResource(R.drawable.plug_poster_image)
     }

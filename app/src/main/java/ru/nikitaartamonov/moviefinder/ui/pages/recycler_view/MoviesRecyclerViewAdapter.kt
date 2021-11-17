@@ -2,11 +2,12 @@ package ru.nikitaartamonov.moviefinder.ui.pages.recycler_view
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import ru.nikitaartamonov.moviefinder.domain.MoviesContract
 import ru.nikitaartamonov.moviefinder.domain.MoviesRepo
 import ru.nikitaartamonov.moviefinder.impl.MoviesRepoImpl
 
 class MoviesRecyclerViewAdapter : RecyclerView.Adapter<MovieItemViewHolder>() {
-    private var moviesRepo: MoviesRepo = MoviesRepoImpl()
+    private lateinit var moviesRepo: MoviesRepo
     lateinit var listener: OnMovieItemClickListener
 
     fun setData(moviesRepo: MoviesRepo) {
