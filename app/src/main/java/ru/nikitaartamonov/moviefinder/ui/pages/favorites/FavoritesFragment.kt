@@ -52,7 +52,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
             }
         }
         binding.favoritesFragmentRecyclerView.adapter = adapter
-        adapter.setData(requireActivity().app.moviesRepo)
+        adapter.setData(requireActivity().app.favoritesMoviesRepo)
     }
 
     companion object {

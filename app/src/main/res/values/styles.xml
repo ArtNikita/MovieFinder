@@ -20,4 +20,17 @@
     <style name="MovieItemTextView.Description">
         <item name="android:textSize">@dimen/movie_item_card_view_description_text_view</item>
     </style>
+
+    <style name="MoviesFragmentHeaderTextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/extra_small_margin_or_padding</item>
+        <item name="android:textSize">@dimen/header_text_view_text_size</item>
+    </style>
+
+    <style name="MoviesFragmentRecyclerView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
 </resources>

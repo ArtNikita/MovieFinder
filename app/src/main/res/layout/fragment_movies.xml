@@ -1,15 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="64dp"
-        android:gravity="center"
-        android:text="@string/movies_fragment_text_view_plug"
-        android:textSize="40sp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <TextView
+            style="@style/MoviesFragmentHeaderTextView"
+            android:text="@string/popular_movies_title" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/popular_movies_recycler_view"
+            style="@style/MoviesFragmentRecyclerView" />
+
+        <TextView
+            style="@style/MoviesFragmentHeaderTextView"
+            android:text="@string/now_playing_movies_title" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/now_playing_movies_recycler_view"
+            style="@style/MoviesFragmentRecyclerView" />
+
+        <TextView
+            style="@style/MoviesFragmentHeaderTextView"
+            android:text="@string/upcoming_movies_title" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/upcoming_movies_recycler_view"
+            style="@style/MoviesFragmentRecyclerView" />
+
+        <TextView
+            style="@style/MoviesFragmentHeaderTextView"
+            android:text="@string/top_rated_movies_title" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/top_rated_movies_recycler_view"
+            style="@style/MoviesFragmentRecyclerView" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.core.widget.NestedScrollView>

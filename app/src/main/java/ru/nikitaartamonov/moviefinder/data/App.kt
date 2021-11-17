@@ -7,18 +7,18 @@ import ru.nikitaartamonov.moviefinder.domain.MoviesRepo
 import ru.nikitaartamonov.moviefinder.impl.MoviesRepoImpl
 
 class App : Application() {
-    lateinit var moviesRepo: MoviesRepo
+    lateinit var favoritesMoviesRepo: MoviesRepo
 
     override fun onCreate() {
         super.onCreate()
-        initMoviesRepo()
+        initFavoritesMoviesRepo()
     }
 
-    private fun initMoviesRepo() {
-        initMoviesRepoWithTestValues()
+    private fun initFavoritesMoviesRepo() {
+        initFavoritesMoviesRepoWithTestValues()
     }
 
-    private fun initMoviesRepoWithTestValues() {
+    private fun initFavoritesMoviesRepoWithTestValues() {
         val tempMovieEntity = MovieEntity(
             id = "0",
             imageRes = "plug_poster_image.png",
@@ -37,7 +37,7 @@ class App : Application() {
             tempMovieEntity.copy(id = "2"), tempMovieEntity.copy(id = "3"),
             tempMovieEntity.copy(id = "4"), tempMovieEntity.copy(id = "5")
         )
-        moviesRepo = MoviesRepoImpl(tempMoviesList)
+        favoritesMoviesRepo = MoviesRepoImpl(tempMoviesList)
     }
 }
 
