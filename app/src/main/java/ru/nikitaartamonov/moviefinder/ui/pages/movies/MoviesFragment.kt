@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.snackbar.Snackbar
 import ru.nikitaartamonov.moviefinder.R
 import ru.nikitaartamonov.moviefinder.databinding.FragmentMoviesBinding
 import ru.nikitaartamonov.moviefinder.domain.MoviesContract.MoviesType
@@ -55,6 +56,23 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
         viewModel.moviesLoadedLiveData.observe(viewLifecycleOwner) {
             setDataToAdapter(it)
         }
+        viewModel.showDownloadErrorLiveData.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let {
+                if (it) showDownloadError()
+            }
+        }
+    }
+
+    private fun showDownloadError() {
+        Snackbar
+            .make(
+                binding.moviesFragmentRecyclerView,
+                getString(R.string.download_error_message),
+                Snackbar.LENGTH_SHORT
+            ).setAction(getString(R.string.retry)){
+                //todo
+            }
+            .show()
     }
 
     companion object {

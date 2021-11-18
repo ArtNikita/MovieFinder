@@ -1,7 +1,9 @@
 package ru.nikitaartamonov.moviefinder.ui.pages.movies
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import ru.nikitaartamonov.moviefinder.domain.Event
 import ru.nikitaartamonov.moviefinder.domain.MoviesContract.MoviesType
 import ru.nikitaartamonov.moviefinder.domain.MoviesRepo
 import ru.nikitaartamonov.moviefinder.impl.ServerMoviesLoaderImpl
@@ -12,6 +14,8 @@ class MoviesViewModel : ViewModel(), MoviesContract.ViewModel {
 
     private val _moviesLoadedLiveData = MutableLiveData<MoviesRepo>()
     override val moviesLoadedLiveData = _moviesLoadedLiveData
+    private val _showDownloadErrorLiveData = MutableLiveData<Event<Boolean>>()
+    override val showDownloadErrorLiveData = _showDownloadErrorLiveData
 
 
     override fun onViewIsReady(moviesType: MoviesType) {
@@ -27,7 +31,7 @@ class MoviesViewModel : ViewModel(), MoviesContract.ViewModel {
     private fun loadMovies(moviesType: MoviesType) {
         serverMoviesLoader.loadMoviesAsync(moviesType) {
             if (it == null) {
-                //todo show error
+                _showDownloadErrorLiveData.postValue(Event(true))
             } else {
                 movies = it
                 movies?.let { moviesRepo ->

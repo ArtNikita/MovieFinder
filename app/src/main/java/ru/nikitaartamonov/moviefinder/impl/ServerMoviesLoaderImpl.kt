@@ -31,16 +31,16 @@ class ServerMoviesLoaderImpl : MoviesContract.ServerMoviesLoader {
                 callback.invoke(getMoviesRepoFromJson(result))
             } catch (e: Exception) {
                 e.printStackTrace()
+                callback.invoke(null)
             } finally {
                 connection.disconnect()
             }
         }.start()
     }
 
-    private fun getMoviesRepoFromJson(json: String): MoviesRepo? {
-        val jsonObject = JSONArray(json)
+    private fun getMoviesRepoFromJson(json: String): MoviesRepo {
         val resultJson = gson.fromJson(
-            JSONObject(jsonObject[0].toString()).get("results").toString(),
+            JSONObject(JSONArray(json)[0].toString()).get("results").toString(),
             Array<PreviewMovieEntity>::class.java
         )
         return MoviesRepoImpl(resultJson.toList())
