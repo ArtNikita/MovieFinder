@@ -8,27 +8,28 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.nikitaartamonov.moviefinder.R
-import ru.nikitaartamonov.moviefinder.data.app
 import ru.nikitaartamonov.moviefinder.databinding.FragmentMoviesBinding
+import ru.nikitaartamonov.moviefinder.domain.MoviesContract.MoviesType
+import ru.nikitaartamonov.moviefinder.domain.MoviesRepo
 import ru.nikitaartamonov.moviefinder.domain.PreviewMovieEntity
+import ru.nikitaartamonov.moviefinder.impl.MoviesRepoImpl
 import ru.nikitaartamonov.moviefinder.ui.pages.recycler_view.MoviesRecyclerViewAdapter
 import ru.nikitaartamonov.moviefinder.ui.pages.recycler_view.OnMovieItemClickListener
 
 class MoviesFragment : Fragment(R.layout.fragment_movies) {
     private val binding: FragmentMoviesBinding by viewBinding(FragmentMoviesBinding::bind)
     private val viewModel: MoviesContract.ViewModel by viewModels<MoviesViewModel>()
+    private val adapter = MoviesRecyclerViewAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initRecyclerViews()
+        initRecyclerView()
+        initViewModel()
+        viewModel.onViewIsReady(MoviesType.POPULAR)
     }
 
-    private fun initRecyclerViews() {
-        initPopularMoviesRecyclerView()
-    }
-
-    private fun initPopularMoviesRecyclerView() {
+    private fun initRecyclerView() {
         binding.moviesFragmentRecyclerView.layoutManager =
             GridLayoutManager(
                 context,
@@ -37,14 +38,23 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
                     else -> HORIZONTAL_RECYCLER_VIEW_COLUMNS_COUNT
                 }
             )
-        val adapter = MoviesRecyclerViewAdapter()
         adapter.listener = object : OnMovieItemClickListener {
             override fun onClick(movieEntity: PreviewMovieEntity) {
                 //todo
             }
         }
         binding.moviesFragmentRecyclerView.adapter = adapter
-        adapter.setData(requireActivity().app.favoritesMoviesRepo)
+        adapter.setData(MoviesRepoImpl())
+    }
+
+    private fun setDataToAdapter(moviesRepo: MoviesRepo) {
+        adapter.setData(moviesRepo)
+    }
+
+    private fun initViewModel() {
+        viewModel.moviesLoadedLiveData.observe(viewLifecycleOwner) {
+            setDataToAdapter(it)
+        }
     }
 
     companion object {

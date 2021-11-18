@@ -1,11 +1,11 @@
 package ru.nikitaartamonov.moviefinder.domain
 
 class MoviesContract {
-    enum class MovieType {
+    enum class MoviesType {
         POPULAR, NOW_PLAYING, UPCOMING, TOP_RATED
     }
 
-    interface ServerMovieLoader {
-        fun loadMoviesAsync(movieType: MovieType, callback: (List<PreviewMovieEntity>) -> Unit)
+    interface ServerMoviesLoader {
+        fun loadMoviesAsync(moviesType: MoviesType, callback: (MoviesRepo?) -> Unit)
     }
 }
