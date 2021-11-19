@@ -3,6 +3,7 @@ package ru.nikitaartamonov.moviefinder.ui.pages.movies
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
+import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -25,9 +26,16 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initMoviesTypeButton()
         initRecyclerView()
         initViewModel()
         viewModel.onViewIsReady()
+    }
+
+    private fun initMoviesTypeButton() {
+        binding.moviesTypeButton.setOnClickListener {
+            viewModel.onMoviesTypeButtonPressed()
+        }
     }
 
     private fun initRecyclerView() {
@@ -64,6 +72,34 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
         viewModel.changeMoviesButtonTextLiveData.observe(viewLifecycleOwner) {
             binding.moviesTypeButton.text = moviesTypeToString(it)
         }
+        viewModel.showMoviesTypeMenuLiveData.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let {
+                showMoviesTypeMenu()
+            }
+        }
+    }
+
+    private fun showMoviesTypeMenu() {
+        val popupMoviesTypeMenu = PopupMenu(requireContext(), binding.moviesTypeButton)
+        popupMoviesTypeMenu.inflate(R.menu.movies_type_menu)
+        popupMoviesTypeMenu.setOnMenuItemClickListener { menuItem ->
+            when(menuItem.itemId){
+                R.id.popular_movies_menu -> {
+                    true
+                }
+                R.id.now_playing_movies_menu -> {
+                    true
+                }
+                R.id.upcoming_movies_menu -> {
+                    true
+                }
+                R.id.top_rated_movies_menu -> {
+                    true
+                }
+                else -> false
+            }
+        }
+        popupMoviesTypeMenu.show()
     }
 
     private fun moviesTypeToString(moviesType: MoviesType?): String = when (moviesType) {

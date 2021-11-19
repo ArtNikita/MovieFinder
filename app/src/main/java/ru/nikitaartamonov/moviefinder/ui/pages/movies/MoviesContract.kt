@@ -11,7 +11,9 @@ class MoviesContract {
         val moviesLoadedLiveData: LiveData<MoviesRepo>
         val showDownloadErrorLiveData: LiveData<Event<Boolean>>
         val changeMoviesButtonTextLiveData: LiveData<MoviesContract.MoviesType>
+        val showMoviesTypeMenuLiveData: LiveData<Event<Boolean>>
 
         fun onViewIsReady()
+        fun onMoviesTypeButtonPressed()
     }
 }
