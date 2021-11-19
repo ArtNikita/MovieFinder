@@ -83,17 +83,21 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
         val popupMoviesTypeMenu = PopupMenu(requireContext(), binding.moviesTypeButton)
         popupMoviesTypeMenu.inflate(R.menu.movies_type_menu)
         popupMoviesTypeMenu.setOnMenuItemClickListener { menuItem ->
-            when(menuItem.itemId){
+            when (menuItem.itemId) {
                 R.id.popular_movies_menu -> {
+                    viewModel.onMoviesTypeMenuButtonPressed(stringToMoviesType(getString(R.string.popular_movies_title)))
                     true
                 }
                 R.id.now_playing_movies_menu -> {
+                    viewModel.onMoviesTypeMenuButtonPressed(stringToMoviesType(getString(R.string.now_playing_movies_title)))
                     true
                 }
                 R.id.upcoming_movies_menu -> {
+                    viewModel.onMoviesTypeMenuButtonPressed(stringToMoviesType(getString(R.string.upcoming_movies_title)))
                     true
                 }
                 R.id.top_rated_movies_menu -> {
+                    viewModel.onMoviesTypeMenuButtonPressed(stringToMoviesType(getString(R.string.top_rated_movies_title)))
                     true
                 }
                 else -> false
@@ -108,6 +112,14 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
         MoviesType.UPCOMING -> getString(R.string.upcoming_movies_title)
         MoviesType.TOP_RATED -> getString(R.string.top_rated_movies_title)
         else -> throw IllegalStateException("No such movies type")
+    }
+
+    private fun stringToMoviesType(moviesTypeString: String): MoviesType = when (moviesTypeString) {
+        getString(R.string.popular_movies_title) -> MoviesType.POPULAR
+        getString(R.string.now_playing_movies_title) -> MoviesType.NOW_PLAYING
+        getString(R.string.upcoming_movies_title) -> MoviesType.UPCOMING
+        getString(R.string.top_rated_movies_title) -> MoviesType.TOP_RATED
+        else -> throw IllegalStateException("No such movies type name")
     }
 
     private fun showDownloadError() {

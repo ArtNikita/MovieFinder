@@ -1,6 +1,5 @@
 package ru.nikitaartamonov.moviefinder.ui.pages.movies
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.nikitaartamonov.moviefinder.domain.Event
@@ -37,6 +36,12 @@ class MoviesViewModel : ViewModel(), MoviesContract.ViewModel {
 
     override fun onMoviesTypeButtonPressed() {
         _showMoviesTypeMenuLiveData.postValue(Event(true))
+    }
+
+    override fun onMoviesTypeMenuButtonPressed(moviesType: MoviesType) {
+        currentMoviesType = moviesType
+        _changeMoviesButtonTextLiveData.postValue(moviesType)
+        loadMovies(moviesType)
     }
 
     private fun loadMovies(moviesType: MoviesType) {
