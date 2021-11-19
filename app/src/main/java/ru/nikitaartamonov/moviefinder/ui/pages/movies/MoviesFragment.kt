@@ -27,7 +27,7 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
 
         initRecyclerView()
         initViewModel()
-        viewModel.onViewIsReady(MoviesType.POPULAR)
+        viewModel.onViewIsReady()
     }
 
     private fun initRecyclerView() {
@@ -61,6 +61,17 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
                 if (it) showDownloadError()
             }
         }
+        viewModel.changeMoviesButtonTextLiveData.observe(viewLifecycleOwner) {
+            binding.moviesTypeButton.text = moviesTypeToString(it)
+        }
+    }
+
+    private fun moviesTypeToString(moviesType: MoviesType?): String = when (moviesType) {
+        MoviesType.POPULAR -> getString(R.string.popular_movies_title)
+        MoviesType.NOW_PLAYING -> getString(R.string.now_playing_movies_title)
+        MoviesType.UPCOMING -> getString(R.string.upcoming_movies_title)
+        MoviesType.TOP_RATED -> getString(R.string.top_rated_movies_title)
+        else -> throw IllegalStateException("No such movies type")
     }
 
     private fun showDownloadError() {
@@ -69,7 +80,7 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
                 binding.moviesFragmentRecyclerView,
                 getString(R.string.download_error_message),
                 Snackbar.LENGTH_SHORT
-            ).setAction(getString(R.string.retry)){
+            ).setAction(getString(R.string.retry)) {
                 //todo
             }
             .show()

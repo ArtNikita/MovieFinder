@@ -11,7 +11,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_margin="@dimen/normal_margin_or_padding"
-        android:text="@string/popular_movies_title"
         android:textAllCaps="false"
         android:textSize="@dimen/movies_type_button_text_size"
         app:icon="@drawable/ic_baseline_keyboard_arrow_down_24"/>

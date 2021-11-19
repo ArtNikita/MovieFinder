@@ -10,7 +10,8 @@ class MoviesContract {
     interface ViewModel {
         val moviesLoadedLiveData: LiveData<MoviesRepo>
         val showDownloadErrorLiveData: LiveData<Event<Boolean>>
+        val changeMoviesButtonTextLiveData: LiveData<MoviesContract.MoviesType>
 
-        fun onViewIsReady(moviesType: MoviesContract.MoviesType)
+        fun onViewIsReady()
     }
 }

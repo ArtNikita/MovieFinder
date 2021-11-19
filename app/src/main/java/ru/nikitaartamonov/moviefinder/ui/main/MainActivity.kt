@@ -29,7 +29,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun hideStatusBar() {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        this.window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        this.window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
     }
 
     private fun initOnClickListeners() {
@@ -56,11 +59,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViewModel() {
         viewModel.openScreenLiveData.observe(this) {
-            when (it) {
-                Screens.MOVIES -> openMoviesScreen()
-                Screens.FAVORITES -> openFavoritesScreen()
-                Screens.SETTINGS -> openSettingsScreen()
-                else -> throw IllegalStateException("Unknown screen launched")
+            it.getContentIfNotHandled()?.let { screen ->
+                when (screen) {
+                    Screens.MOVIES -> openMoviesScreen()
+                    Screens.FAVORITES -> openFavoritesScreen()
+                    Screens.SETTINGS -> openSettingsScreen()
+                }
             }
         }
         viewModel.initStartScreenLiveData.observe(this) {

@@ -1,6 +1,5 @@
 package ru.nikitaartamonov.moviefinder.ui.pages.movies
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.nikitaartamonov.moviefinder.domain.Event
@@ -11,18 +10,23 @@ import ru.nikitaartamonov.moviefinder.impl.ServerMoviesLoaderImpl
 class MoviesViewModel : ViewModel(), MoviesContract.ViewModel {
     private val serverMoviesLoader = ServerMoviesLoaderImpl()
     private var movies: MoviesRepo? = null
+    private var currentMoviesType = MoviesType.POPULAR
 
     private val _moviesLoadedLiveData = MutableLiveData<MoviesRepo>()
     override val moviesLoadedLiveData = _moviesLoadedLiveData
     private val _showDownloadErrorLiveData = MutableLiveData<Event<Boolean>>()
     override val showDownloadErrorLiveData = _showDownloadErrorLiveData
+    private val _changeMoviesButtonTextLiveData = MutableLiveData<MoviesType>()
+    override val changeMoviesButtonTextLiveData = _changeMoviesButtonTextLiveData
 
 
-    override fun onViewIsReady(moviesType: MoviesType) {
+    override fun onViewIsReady() {
         if (movies == null) {
-            loadMovies(moviesType)
+            _changeMoviesButtonTextLiveData.postValue(currentMoviesType)
+            loadMovies(currentMoviesType)
         } else {
             movies?.let {
+                _changeMoviesButtonTextLiveData.postValue(currentMoviesType)
                 _moviesLoadedLiveData.postValue(it)
             }
         }
