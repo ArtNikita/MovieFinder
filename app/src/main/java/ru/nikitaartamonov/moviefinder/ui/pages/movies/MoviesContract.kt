@@ -16,5 +16,6 @@ class MoviesContract {
         fun onViewIsReady()
         fun onMoviesTypeButtonPressed()
         fun onMoviesTypeMenuButtonPressed(moviesType: MoviesContract.MoviesType)
+        fun onDownloadErrorSnackbarRetryButtonPressed()
     }
 }

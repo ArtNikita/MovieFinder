@@ -44,6 +44,10 @@ class MoviesViewModel : ViewModel(), MoviesContract.ViewModel {
         loadMovies(moviesType)
     }
 
+    override fun onDownloadErrorSnackbarRetryButtonPressed() {
+        loadMovies(currentMoviesType)
+    }
+
     private fun loadMovies(moviesType: MoviesType) {
         serverMoviesLoader.loadMoviesAsync(moviesType) {
             if (it == null) {

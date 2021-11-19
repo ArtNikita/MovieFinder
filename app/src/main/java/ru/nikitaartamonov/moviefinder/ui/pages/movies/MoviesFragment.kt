@@ -129,7 +129,7 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
                 getString(R.string.download_error_message),
                 Snackbar.LENGTH_SHORT
             ).setAction(getString(R.string.retry)) {
-                //todo
+                viewModel.onDownloadErrorSnackbarRetryButtonPressed()
             }
             .show()
     }
