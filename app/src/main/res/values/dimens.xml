@@ -4,4 +4,6 @@
     <dimen name="extra_small_margin_or_padding">4dp</dimen>
     <dimen name="movie_item_card_view_name_text_view">20sp</dimen>
     <dimen name="movie_item_card_view_description_text_view">14sp</dimen>
+    <dimen name="movies_type_button_text_size">16sp</dimen>
+    <dimen name="normal_margin_or_padding">16dp</dimen>
 </resources>

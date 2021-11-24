@@ -1,6 +1,8 @@
 package ru.nikitaartamonov.moviefinder.ui.main
 
 import android.os.Bundle
+import android.view.Window
+import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import ru.nikitaartamonov.moviefinder.R
@@ -16,12 +18,21 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        hideStatusBar()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initOnClickListeners()
         initViewModel()
         viewModel.onViewIsReady()
+    }
+
+    private fun hideStatusBar() {
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        this.window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
     }
 
     private fun initOnClickListeners() {
@@ -48,11 +59,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViewModel() {
         viewModel.openScreenLiveData.observe(this) {
-            when (it) {
-                Screens.MOVIES -> openMoviesScreen()
-                Screens.FAVORITES -> openFavoritesScreen()
-                Screens.SETTINGS -> openSettingsScreen()
-                else -> throw IllegalStateException("Unknown screen launched")
+            it.getContentIfNotHandled()?.let { screen ->
+                when (screen) {
+                    Screens.MOVIES -> openMoviesScreen()
+                    Screens.FAVORITES -> openFavoritesScreen()
+                    Screens.SETTINGS -> openSettingsScreen()
+                }
             }
         }
         viewModel.initStartScreenLiveData.observe(this) {

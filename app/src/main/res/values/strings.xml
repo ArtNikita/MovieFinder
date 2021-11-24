@@ -4,9 +4,14 @@
     <string name="favorites_menu_title">Favorites</string>
     <string name="settings_menu_title">Settings</string>
     <string name="movie_item_image_view_content_description">Poster</string>
-    <string name="movies_fragment_text_view_plug">Movies fragment</string>
     <string name="settings_fragment_text_view_plug">Settings fragment</string>
     <string name="default_movie_poster_ratio">27:40</string>
     <string name="imdb">IMDB</string>
     <string name="kinopoisk">KP</string>
+    <string name="popular_movies_title">Popular</string>
+    <string name="now_playing_movies_title">Now playing</string>
+    <string name="upcoming_movies_title">Upcoming</string>
+    <string name="top_rated_movies_title">Top rated</string>
+    <string name="download_error_message">Check your internet please.</string>
+    <string name="retry">Retry</string>
 </resources>

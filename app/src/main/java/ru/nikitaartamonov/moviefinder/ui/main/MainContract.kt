@@ -1,6 +1,7 @@
 package ru.nikitaartamonov.moviefinder.ui.main
 
 import androidx.lifecycle.LiveData
+import ru.nikitaartamonov.moviefinder.domain.Event
 
 enum class Screens {
     MOVIES, FAVORITES, SETTINGS
@@ -9,7 +10,7 @@ enum class Screens {
 class MainContract {
 
     interface ViewModel {
-        val openScreenLiveData: LiveData<Screens>
+        val openScreenLiveData: LiveData<Event<Screens>>
         val initStartScreenLiveData: LiveData<Boolean>
 
         fun onBottomNavigationViewItemSelected(screen: Screens)
