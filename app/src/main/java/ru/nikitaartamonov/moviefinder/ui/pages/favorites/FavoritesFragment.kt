@@ -14,14 +14,21 @@ import ru.nikitaartamonov.moviefinder.domain.PreviewMovieEntity
 import ru.nikitaartamonov.moviefinder.ui.pages.movie_description.MovieDescriptionActivity
 import ru.nikitaartamonov.moviefinder.ui.pages.recycler_view.MoviesRecyclerViewAdapter
 import ru.nikitaartamonov.moviefinder.ui.pages.recycler_view.OnMovieItemClickListener
+import ru.nikitaartamonov.moviefinder.util.MyAnalytics
 
 class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     private val binding: FragmentFavoritesBinding by viewBinding(FragmentFavoritesBinding::bind)
     private val viewModel: FavoritesContract.ViewModel by viewModels<FavoritesViewModel>()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        MyAnalytics.logEvent(requireContext(), "FavoritesFragment onCreate()")
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        MyAnalytics.logEvent(requireContext(), "FavoritesFragment onViewCreated()")
         initRecyclerView()
         initViewModel()
     }
@@ -40,21 +47,32 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
     private fun initRecyclerView() {
         binding.favoritesFragmentRecyclerView.layoutManager =
-            GridLayoutManager(
-                context,
-                when (resources.configuration.orientation) {
-                    Configuration.ORIENTATION_PORTRAIT -> VERTICAL_RECYCLER_VIEW_COLUMNS_COUNT
-                    else -> HORIZONTAL_RECYCLER_VIEW_COLUMNS_COUNT
-                }
-            )
+                GridLayoutManager(
+                        context,
+                        when (resources.configuration.orientation) {
+                            Configuration.ORIENTATION_PORTRAIT -> VERTICAL_RECYCLER_VIEW_COLUMNS_COUNT
+                            else -> HORIZONTAL_RECYCLER_VIEW_COLUMNS_COUNT
+                        }
+                )
         val adapter = MoviesRecyclerViewAdapter()
         adapter.listener = object : OnMovieItemClickListener {
             override fun onClick(movieEntity: PreviewMovieEntity) {
+                MyAnalytics.logEvent(requireContext(), "FavoritesFragment $movieEntity clicked")
                 viewModel.onItemTouched(movieEntity)
             }
         }
         binding.favoritesFragmentRecyclerView.adapter = adapter
         adapter.setData(requireActivity().app.favoritesMoviesRepo)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        MyAnalytics.logEvent(requireContext(), "FavoritesFragment onDestroyView()")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        MyAnalytics.logEvent(requireContext(), "FavoritesFragment onDestroy()")
     }
 
     companion object {

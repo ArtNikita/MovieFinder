@@ -8,6 +8,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import ru.nikitaartamonov.moviefinder.databinding.ActivityMovieDescriptionBinding
 import ru.nikitaartamonov.moviefinder.domain.PreviewMovieEntity
+import ru.nikitaartamonov.moviefinder.util.MyAnalytics
 
 class MovieDescriptionActivity : AppCompatActivity() {
 
@@ -15,6 +16,7 @@ class MovieDescriptionActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MyAnalytics.logEvent(this, "MovieDescriptionActivity onCreate()")
         hideStatusBar()
         binding = ActivityMovieDescriptionBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -23,6 +25,11 @@ class MovieDescriptionActivity : AppCompatActivity() {
     private fun hideStatusBar() {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         this.window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        MyAnalytics.logEvent(this, "MovieDescriptionActivity onDestroy()")
     }
 
     companion object {
