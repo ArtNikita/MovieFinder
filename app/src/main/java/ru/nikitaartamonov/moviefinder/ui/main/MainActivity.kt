@@ -1,5 +1,7 @@
 package ru.nikitaartamonov.moviefinder.ui.main
 
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
@@ -15,6 +17,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainContract.ViewModel by viewModels<MainViewModel>()
+
+    private lateinit var networkBroadcastReceiver: NetworkBroadcastReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +74,10 @@ class MainActivity : AppCompatActivity() {
         viewModel.initStartScreenLiveData.observe(this) {
             if (supportFragmentManager.fragments.isEmpty()) openMoviesScreen()
         }
+        viewModel.initAndRegisterNetworkBroadcastReceiver.observe(this) {
+            networkBroadcastReceiver = it
+            registerReceiver(networkBroadcastReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+        }
     }
 
     private fun openMoviesScreen() {
@@ -91,5 +99,10 @@ class MainActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(binding.fragmentContainerFrameLayout.id, SettingsFragment())
             .commit()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(networkBroadcastReceiver)
     }
 }

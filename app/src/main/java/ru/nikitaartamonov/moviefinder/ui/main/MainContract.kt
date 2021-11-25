@@ -12,6 +12,7 @@ class MainContract {
     interface ViewModel {
         val openScreenLiveData: LiveData<Event<Screens>>
         val initStartScreenLiveData: LiveData<Boolean>
+        val initAndRegisterNetworkBroadcastReceiver: LiveData<NetworkBroadcastReceiver>
 
         fun onBottomNavigationViewItemSelected(screen: Screens)
         fun onViewIsReady()

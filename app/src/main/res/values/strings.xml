@@ -14,4 +14,6 @@
     <string name="top_rated_movies_title">Top rated</string>
     <string name="download_error_message">Check your internet please.</string>
     <string name="retry">Retry</string>
+    <string name="network_connected_broadcast_receiver_message">Network connected</string>
+    <string name="network_disconnected_broadcast_receiver_message">Network disconnected</string>
 </resources>
