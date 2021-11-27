@@ -36,6 +36,5 @@ class MovieItemViewHolder(parent: ViewGroup, listener: OnMovieItemClickListener)
             .with(itemView.context)
             .load("${ApiConstants.POSTER_URI_START}${movieEntity.poster_path}")
             .into(binding.movieItemImageView)
-        binding.movieItemImageView.setBackgroundResource(R.drawable.empty_rectangle)
     }
 }
