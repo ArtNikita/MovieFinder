@@ -1,6 +1,6 @@
 package ru.nikitaartamonov.moviefinder.domain
 
-class MoviesContract {
+class MoviesLoaderContract {
     enum class MoviesType {
         POPULAR, NOW_PLAYING, UPCOMING, TOP_RATED
     }

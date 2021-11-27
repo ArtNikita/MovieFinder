@@ -11,7 +11,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import ru.nikitaartamonov.moviefinder.R
 import ru.nikitaartamonov.moviefinder.databinding.FragmentMoviesBinding
-import ru.nikitaartamonov.moviefinder.domain.MoviesContract.MoviesType
+import ru.nikitaartamonov.moviefinder.domain.MoviesLoaderContract.MoviesType
 import ru.nikitaartamonov.moviefinder.domain.MoviesRepo
 import ru.nikitaartamonov.moviefinder.domain.PreviewMovieEntity
 import ru.nikitaartamonov.moviefinder.impl.MoviesRepoImpl

@@ -21,10 +21,10 @@ class App : Application() {
     private fun initFavoritesMoviesRepoWithTestValues() {
         val tempMovieEntity = PreviewMovieEntity(
             id = 0,
-            poster_path = "5DpmtMBXXNDujIuSlKW3WLKuqEd.jpg",
+            posterPath = "5DpmtMBXXNDujIuSlKW3WLKuqEd.jpg",
             title = "The big Lebowski",
-            release_date = "1998",
-            vote_average = 8.1f
+            releaseDate = "1998",
+            voteAverage = 8.1f
         )
         val tempMoviesList = listOf<PreviewMovieEntity>(
             tempMovieEntity, tempMovieEntity.copy(id = 1),
