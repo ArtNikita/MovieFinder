@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import org.json.JSONArray
 import org.json.JSONObject
 import ru.nikitaartamonov.moviefinder.data.ApiConstants
-import ru.nikitaartamonov.moviefinder.domain.MoviesContract
+import ru.nikitaartamonov.moviefinder.domain.MoviesLoaderContract
 import ru.nikitaartamonov.moviefinder.domain.MoviesRepo
 import ru.nikitaartamonov.moviefinder.domain.PreviewMovieEntity
 import java.io.BufferedReader
@@ -12,11 +12,11 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.util.*
 
-class ServerMoviesLoaderImpl : MoviesContract.ServerMoviesLoader {
+class ServerMoviesLoaderImpl : MoviesLoaderContract.ServerMoviesLoader {
     private val gson by lazy { Gson() }
 
     override fun loadMoviesAsync(
-        moviesType: MoviesContract.MoviesType,
+        moviesType: MoviesLoaderContract.MoviesType,
         callback: (MoviesRepo?) -> Unit
     ) {
         Thread {

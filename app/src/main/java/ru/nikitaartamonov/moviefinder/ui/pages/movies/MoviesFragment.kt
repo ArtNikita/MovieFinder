@@ -11,21 +11,28 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import ru.nikitaartamonov.moviefinder.R
 import ru.nikitaartamonov.moviefinder.databinding.FragmentMoviesBinding
-import ru.nikitaartamonov.moviefinder.domain.MoviesContract.MoviesType
+import ru.nikitaartamonov.moviefinder.domain.MoviesLoaderContract.MoviesType
 import ru.nikitaartamonov.moviefinder.domain.MoviesRepo
 import ru.nikitaartamonov.moviefinder.domain.PreviewMovieEntity
 import ru.nikitaartamonov.moviefinder.impl.MoviesRepoImpl
 import ru.nikitaartamonov.moviefinder.ui.pages.recycler_view.MoviesRecyclerViewAdapter
 import ru.nikitaartamonov.moviefinder.ui.pages.recycler_view.OnMovieItemClickListener
+import ru.nikitaartamonov.moviefinder.util.MyAnalytics
 
 class MoviesFragment : Fragment(R.layout.fragment_movies) {
     private val binding: FragmentMoviesBinding by viewBinding(FragmentMoviesBinding::bind)
     private val viewModel: MoviesContract.ViewModel by viewModels<MoviesViewModel>()
     private val adapter = MoviesRecyclerViewAdapter()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        MyAnalytics.logEvent(requireContext(), "MoviesFragment onCreate()")
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        MyAnalytics.logEvent(requireContext(), "MoviesFragment onViewCreated()")
         initMoviesTypeButton()
         initRecyclerView()
         initViewModel()
@@ -40,15 +47,16 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
 
     private fun initRecyclerView() {
         binding.moviesFragmentRecyclerView.layoutManager =
-            GridLayoutManager(
-                context,
-                when (resources.configuration.orientation) {
-                    Configuration.ORIENTATION_PORTRAIT -> VERTICAL_RECYCLER_VIEW_COLUMNS_COUNT
-                    else -> HORIZONTAL_RECYCLER_VIEW_COLUMNS_COUNT
-                }
-            )
+                GridLayoutManager(
+                        context,
+                        when (resources.configuration.orientation) {
+                            Configuration.ORIENTATION_PORTRAIT -> VERTICAL_RECYCLER_VIEW_COLUMNS_COUNT
+                            else -> HORIZONTAL_RECYCLER_VIEW_COLUMNS_COUNT
+                        }
+                )
         adapter.listener = object : OnMovieItemClickListener {
             override fun onClick(movieEntity: PreviewMovieEntity) {
+                MyAnalytics.logEvent(requireContext(), "MoviesFragment $movieEntity clicked")
                 //todo
             }
         }
@@ -124,14 +132,24 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
 
     private fun showDownloadError() {
         Snackbar
-            .make(
-                binding.moviesFragmentRecyclerView,
-                getString(R.string.download_error_message),
-                Snackbar.LENGTH_SHORT
-            ).setAction(getString(R.string.retry)) {
-                viewModel.onDownloadErrorSnackbarRetryButtonPressed()
-            }
-            .show()
+                .make(
+                        binding.moviesFragmentRecyclerView,
+                        getString(R.string.download_error_message),
+                        Snackbar.LENGTH_SHORT
+                ).setAction(getString(R.string.retry)) {
+                    viewModel.onDownloadErrorSnackbarRetryButtonPressed()
+                }
+                .show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        MyAnalytics.logEvent(requireContext(), "MoviesFragment onDestroyView()")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        MyAnalytics.logEvent(requireContext(), "MoviesFragment onDestroy()")
     }
 
     companion object {
