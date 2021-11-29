@@ -2,13 +2,15 @@ package ru.nikitaartamonov.moviefinder.ui.pages.movies
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import ru.nikitaartamonov.moviefinder.data.retrofit.ServerMoviesLoaderRetrofit
 import ru.nikitaartamonov.moviefinder.domain.Event
-import ru.nikitaartamonov.moviefinder.domain.MoviesContract.MoviesType
+import ru.nikitaartamonov.moviefinder.domain.MoviesLoaderContract
+import ru.nikitaartamonov.moviefinder.domain.MoviesLoaderContract.MoviesType
 import ru.nikitaartamonov.moviefinder.domain.MoviesRepo
-import ru.nikitaartamonov.moviefinder.impl.ServerMoviesLoaderImpl
 
 class MoviesViewModel : ViewModel(), MoviesContract.ViewModel {
-    private val serverMoviesLoader = ServerMoviesLoaderImpl()
+    private val serverMoviesLoader: MoviesLoaderContract.ServerMoviesLoader =
+        ServerMoviesLoaderRetrofit()
     private var movies: MoviesRepo? = null
     private var currentMoviesType = MoviesType.POPULAR
 
