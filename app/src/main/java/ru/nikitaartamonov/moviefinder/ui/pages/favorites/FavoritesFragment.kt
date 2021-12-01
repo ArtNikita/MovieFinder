@@ -62,7 +62,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
             }
         }
         binding.favoritesFragmentRecyclerView.adapter = adapter
-        adapter.setData(requireActivity().app.favoritesMoviesRepo)
+        requireActivity().app.favoritesMoviesRepo.getMoviesList { adapter.setData(it) }
     }
 
     override fun onDestroyView() {

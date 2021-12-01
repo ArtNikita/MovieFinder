@@ -61,11 +61,11 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
             }
         }
         binding.moviesFragmentRecyclerView.adapter = adapter
-        adapter.setData(MoviesRepoImpl())
+        adapter.setData(emptyList())
     }
 
     private fun setDataToAdapter(moviesRepo: MoviesRepo) {
-        adapter.setData(moviesRepo)
+        adapter.setData(moviesRepo.moviesList)
     }
 
     private fun initViewModel() {
