@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.nikitaartamonov.moviefinder.domain.PreviewMovieEntity
 
 class MoviesRecyclerViewAdapter : RecyclerView.Adapter<MovieItemViewHolder>() {
-    private lateinit var moviesList: List<PreviewMovieEntity>
+    private var moviesList: List<PreviewMovieEntity> = emptyList()
     lateinit var listener: OnMovieItemClickListener
 
     fun setData(moviesList: List<PreviewMovieEntity>) {

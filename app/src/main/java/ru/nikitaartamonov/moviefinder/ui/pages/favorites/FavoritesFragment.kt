@@ -47,22 +47,28 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
     private fun initRecyclerView() {
         binding.favoritesFragmentRecyclerView.layoutManager =
-                GridLayoutManager(
-                        context,
-                        when (resources.configuration.orientation) {
-                            Configuration.ORIENTATION_PORTRAIT -> VERTICAL_RECYCLER_VIEW_COLUMNS_COUNT
-                            else -> HORIZONTAL_RECYCLER_VIEW_COLUMNS_COUNT
-                        }
-                )
+            GridLayoutManager(
+                context,
+                when (resources.configuration.orientation) {
+                    Configuration.ORIENTATION_PORTRAIT -> VERTICAL_RECYCLER_VIEW_COLUMNS_COUNT
+                    else -> HORIZONTAL_RECYCLER_VIEW_COLUMNS_COUNT
+                }
+            )
         val adapter = MoviesRecyclerViewAdapter()
         adapter.listener = object : OnMovieItemClickListener {
             override fun onClick(movieEntity: PreviewMovieEntity) {
                 MyAnalytics.logEvent(requireContext(), "FavoritesFragment $movieEntity clicked")
                 viewModel.onItemTouched(movieEntity)
             }
+
+            override fun onLongClick(movieEntity: PreviewMovieEntity) {
+                //todo
+            }
         }
         binding.favoritesFragmentRecyclerView.adapter = adapter
-        requireActivity().app.favoritesMoviesRepo.getMoviesList { adapter.setData(it) }
+        requireActivity().app.favoritesMoviesRepo.getMoviesList {
+            requireActivity().runOnUiThread { adapter.setData(it) }
+        }
     }
 
     override fun onDestroyView() {

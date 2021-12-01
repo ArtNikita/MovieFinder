@@ -10,6 +10,7 @@ import ru.nikitaartamonov.moviefinder.domain.Event
 import ru.nikitaartamonov.moviefinder.domain.MoviesLoaderContract
 import ru.nikitaartamonov.moviefinder.domain.MoviesLoaderContract.MoviesType
 import ru.nikitaartamonov.moviefinder.domain.MoviesRepo
+import ru.nikitaartamonov.moviefinder.domain.PreviewMovieEntity
 
 class MoviesViewModel(application: Application) : AndroidViewModel(application),
     MoviesContract.ViewModel {
@@ -31,6 +32,8 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application),
     override val changeMoviesButtonTextLiveData = _changeMoviesButtonTextLiveData
     private val _showMoviesTypeMenuLiveData = MutableLiveData<Event<Boolean>>()
     override val showMoviesTypeMenuLiveData = _showMoviesTypeMenuLiveData
+    private val _notifyMovieAddedToFavoritesLiveData = MutableLiveData<Event<String>>()
+    override val notifyMovieAddedToFavoritesLiveData = _notifyMovieAddedToFavoritesLiveData
 
 
     override fun onViewIsReady() {
@@ -61,6 +64,15 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application),
 
     override fun onDownloadErrorSnackbarRetryButtonPressed() {
         loadMovies(currentMoviesType)
+    }
+
+    override fun onMovieItemLongTouched(movieEntity: PreviewMovieEntity) {
+        addMovieEntityToFavorites(movieEntity)
+    }
+
+    private fun addMovieEntityToFavorites(movieEntity: PreviewMovieEntity) {
+        app.favoritesMoviesRepo.addMovie(movieEntity)
+        _notifyMovieAddedToFavoritesLiveData.postValue(Event(movieEntity.title))
     }
 
     private fun loadMovies(moviesType: MoviesType) {

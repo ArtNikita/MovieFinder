@@ -19,26 +19,6 @@ class App : Application() {
         )
     }
     val favoritesMoviesRepo: MoviesRepoRoom by lazy { MoviesRepoRoomImpl(applicationContext) }
-
-    override fun onCreate() {
-        super.onCreate()
-        initFavoritesMoviesRepo()
-    }
-
-    private fun initFavoritesMoviesRepo() {
-        initFavoritesMoviesRepoWithTestValues()
-    }
-
-    private fun initFavoritesMoviesRepoWithTestValues() {
-        val tempMovieEntity = PreviewMovieEntity(
-            id = Random.nextLong(),
-            posterPath = "5DpmtMBXXNDujIuSlKW3WLKuqEd.jpg",
-            title = "The big Lebowski",
-            releaseDate = "1998",
-            voteAverage = 8.1f
-        )
-        favoritesMoviesRepo.addMovie(tempMovieEntity)
-    }
 }
 
 val Context.app: App
