@@ -68,6 +68,7 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application),
     }
 
     override fun onMovieItemLongTouched(movieEntity: PreviewMovieEntity) {
+        app.vibrate()
         addMovieEntityToFavorites(movieEntity)
     }
 

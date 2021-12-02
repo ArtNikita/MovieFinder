@@ -23,6 +23,7 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     override fun onItemLongTouched(movieEntity: PreviewMovieEntity, position: Int) {
+        app.vibrate()
         app.favoritesMoviesRepo.deleteMovie(movieEntity.id){
             if (it){
                 _deleteMovieByPositionLiveData.postValue(Event(position))
