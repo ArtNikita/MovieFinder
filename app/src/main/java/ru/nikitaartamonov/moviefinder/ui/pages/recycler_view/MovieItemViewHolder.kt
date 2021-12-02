@@ -25,7 +25,7 @@ class MovieItemViewHolder(parent: ViewGroup, listener: OnMovieItemClickListener)
             listener.onClick(movieEntity)
         }
         itemView.setOnLongClickListener {
-            listener.onLongClick(movieEntity)
+            listener.onLongClick(movieEntity, position)
             true
         }
     }

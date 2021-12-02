@@ -8,9 +8,13 @@ class MoviesRecyclerViewAdapter : RecyclerView.Adapter<MovieItemViewHolder>() {
     private var moviesList: List<PreviewMovieEntity> = emptyList()
     lateinit var listener: OnMovieItemClickListener
 
-    fun setData(moviesList: List<PreviewMovieEntity>) {
+    fun setDataAndNotify(moviesList: List<PreviewMovieEntity>) {
         this.moviesList = moviesList
         notifyDataSetChanged()
+    }
+
+    fun setData(moviesList: List<PreviewMovieEntity>) {
+        this.moviesList = moviesList
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieItemViewHolder {

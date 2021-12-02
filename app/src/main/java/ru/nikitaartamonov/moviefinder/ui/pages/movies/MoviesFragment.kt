@@ -59,17 +59,17 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
                 //todo
             }
 
-            override fun onLongClick(movieEntity: PreviewMovieEntity) {
+            override fun onLongClick(movieEntity: PreviewMovieEntity, position: Int) {
                 MyAnalytics.logEvent(requireContext(), "MoviesFragment $movieEntity long clicked")
                 viewModel.onMovieItemLongTouched(movieEntity)
             }
         }
         binding.moviesFragmentRecyclerView.adapter = adapter
-        adapter.setData(emptyList())
+        adapter.setDataAndNotify(emptyList())
     }
 
     private fun setDataToAdapter(moviesRepo: MoviesRepo) {
-        adapter.setData(moviesRepo.moviesList)
+        adapter.setDataAndNotify(moviesRepo.moviesList)
     }
 
     private fun initViewModel() {

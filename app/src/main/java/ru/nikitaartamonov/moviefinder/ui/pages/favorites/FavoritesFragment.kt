@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.snackbar.Snackbar
 import ru.nikitaartamonov.moviefinder.R
 import ru.nikitaartamonov.moviefinder.data.app
 import ru.nikitaartamonov.moviefinder.databinding.FragmentFavoritesBinding
@@ -19,6 +20,7 @@ import ru.nikitaartamonov.moviefinder.util.MyAnalytics
 class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     private val binding: FragmentFavoritesBinding by viewBinding(FragmentFavoritesBinding::bind)
     private val viewModel: FavoritesContract.ViewModel by viewModels<FavoritesViewModel>()
+    private lateinit var adapter: MoviesRecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +41,30 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
                 openMovieDescription(movieEntity)
             }
         }
+        viewModel.deleteMovieByPositionLiveData.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let { position ->
+                requireActivity().app.favoritesMoviesRepo.getMoviesList {
+                    requireActivity().runOnUiThread {
+                        adapter.setData(it)
+                        adapter.notifyItemRemoved(position)
+                    }
+                }
+            }
+        }
+        viewModel.notifyMovieEntityWasDeletedLiveData.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let { movieEntity ->
+                notifyMovieEntityWasDeleted(movieEntity)
+            }
+        }
+    }
+
+    private fun notifyMovieEntityWasDeleted(movieEntity: PreviewMovieEntity) {
+        val msg = "${movieEntity.title} ${getString(R.string.movie_removed_from_favorites_message)}"
+        Snackbar.make(
+            binding.favoritesFragmentRecyclerView,
+            msg,
+            Snackbar.LENGTH_SHORT
+        ).show()
     }
 
     private fun openMovieDescription(previewMovieEntity: PreviewMovieEntity) {
@@ -54,20 +80,21 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
                     else -> HORIZONTAL_RECYCLER_VIEW_COLUMNS_COUNT
                 }
             )
-        val adapter = MoviesRecyclerViewAdapter()
+        adapter = MoviesRecyclerViewAdapter()
         adapter.listener = object : OnMovieItemClickListener {
             override fun onClick(movieEntity: PreviewMovieEntity) {
                 MyAnalytics.logEvent(requireContext(), "FavoritesFragment $movieEntity clicked")
                 viewModel.onItemTouched(movieEntity)
             }
 
-            override fun onLongClick(movieEntity: PreviewMovieEntity) {
-                //todo
+            override fun onLongClick(movieEntity: PreviewMovieEntity, position: Int) {
+                MyAnalytics.logEvent(requireContext(), "FavoritesFragment $movieEntity long clicked")
+                viewModel.onItemLongTouched(movieEntity, position)
             }
         }
         binding.favoritesFragmentRecyclerView.adapter = adapter
         requireActivity().app.favoritesMoviesRepo.getMoviesList {
-            requireActivity().runOnUiThread { adapter.setData(it) }
+            requireActivity().runOnUiThread { adapter.setDataAndNotify(it) }
         }
     }
 
