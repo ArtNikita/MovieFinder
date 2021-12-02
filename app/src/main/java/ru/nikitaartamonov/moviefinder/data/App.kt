@@ -10,8 +10,9 @@ import kotlin.random.Random
 
 private const val SHARED_PREFERENCES_NAME = "SHARED_PREFERENCES_NAME"
 
+const val SHARED_PREFERENCES_MOVIES_TYPE_KEY = "SHARED_PREFERENCES_MOVIES_TYPE_KEY"
+
 class App : Application() {
-    val SHARED_PREFERENCES_MOVIES_TYPE_KEY = "SHARED_PREFERENCES_MOVIES_TYPE_KEY"
     val sharedPreferences: SharedPreferences by lazy {
         getSharedPreferences(
             SHARED_PREFERENCES_NAME,

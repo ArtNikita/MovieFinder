@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import ru.nikitaartamonov.moviefinder.data.ApiConstants
 import ru.nikitaartamonov.moviefinder.data.App
+import ru.nikitaartamonov.moviefinder.data.SHARED_PREFERENCES_MOVIES_TYPE_KEY
 import ru.nikitaartamonov.moviefinder.data.retrofit.ServerMoviesLoaderRetrofit
 import ru.nikitaartamonov.moviefinder.domain.Event
 import ru.nikitaartamonov.moviefinder.domain.MoviesLoaderContract
@@ -20,7 +21,7 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application),
     private var movies: MoviesRepo? = null
     private var currentMoviesType = ApiConstants.getMoviesTypeByString(
         app.sharedPreferences.getString(
-            app.SHARED_PREFERENCES_MOVIES_TYPE_KEY, ApiConstants.POPULAR_STRING
+            SHARED_PREFERENCES_MOVIES_TYPE_KEY, ApiConstants.POPULAR_STRING
         ) ?: ApiConstants.POPULAR_STRING
     )
 
@@ -57,7 +58,7 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application),
         _changeMoviesButtonTextLiveData.postValue(moviesType)
         loadMovies(moviesType)
         app.sharedPreferences.edit().putString(
-            app.SHARED_PREFERENCES_MOVIES_TYPE_KEY,
+            SHARED_PREFERENCES_MOVIES_TYPE_KEY,
             ApiConstants.getMoviesTypeString(moviesType)
         ).apply()
     }
