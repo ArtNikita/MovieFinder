@@ -2,36 +2,28 @@ package ru.nikitaartamonov.moviefinder.data
 
 import android.app.Application
 import android.content.Context
-import ru.nikitaartamonov.moviefinder.domain.MoviesRepo
-import ru.nikitaartamonov.moviefinder.domain.PreviewMovieEntity
-import ru.nikitaartamonov.moviefinder.impl.MoviesRepoImpl
+import android.content.SharedPreferences
+import android.os.Vibrator
+import ru.nikitaartamonov.moviefinder.domain.MoviesRepoRoom
+import ru.nikitaartamonov.moviefinder.impl.MoviesRepoRoomImpl
+
+const val SHARED_PREFERENCES_MOVIES_TYPE_KEY = "SHARED_PREFERENCES_MOVIES_TYPE_KEY"
+
+private const val SHARED_PREFERENCES_NAME = "SHARED_PREFERENCES_NAME"
+private const val VIBRATION_DURATION: Long = 20
 
 class App : Application() {
-    lateinit var favoritesMoviesRepo: MoviesRepo
-
-    override fun onCreate() {
-        super.onCreate()
-        initFavoritesMoviesRepo()
-    }
-
-    private fun initFavoritesMoviesRepo() {
-        initFavoritesMoviesRepoWithTestValues()
-    }
-
-    private fun initFavoritesMoviesRepoWithTestValues() {
-        val tempMovieEntity = PreviewMovieEntity(
-            id = 0,
-            posterPath = "5DpmtMBXXNDujIuSlKW3WLKuqEd.jpg",
-            title = "The big Lebowski",
-            releaseDate = "1998",
-            voteAverage = 8.1f
+    val sharedPreferences: SharedPreferences by lazy {
+        getSharedPreferences(
+            SHARED_PREFERENCES_NAME,
+            MODE_PRIVATE
         )
-        val tempMoviesList = listOf<PreviewMovieEntity>(
-            tempMovieEntity, tempMovieEntity.copy(id = 1),
-            tempMovieEntity.copy(id = 2), tempMovieEntity.copy(id = 3),
-            tempMovieEntity.copy(id = 4), tempMovieEntity.copy(id = 5)
-        )
-        favoritesMoviesRepo = MoviesRepoImpl(tempMoviesList)
+    }
+    val favoritesMoviesRepo: MoviesRepoRoom by lazy { MoviesRepoRoomImpl(applicationContext) }
+
+    private val vibrator: Vibrator by lazy { getSystemService(Context.VIBRATOR_SERVICE) as Vibrator }
+    fun vibrate() {
+        vibrator.vibrate(VIBRATION_DURATION)
     }
 }
 

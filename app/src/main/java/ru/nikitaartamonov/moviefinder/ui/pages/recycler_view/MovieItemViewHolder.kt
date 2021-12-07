@@ -24,6 +24,10 @@ class MovieItemViewHolder(parent: ViewGroup, listener: OnMovieItemClickListener)
         itemView.setOnClickListener {
             listener.onClick(movieEntity)
         }
+        itemView.setOnLongClickListener {
+            listener.onLongClick(movieEntity, position)
+            true
+        }
     }
 
     fun bind(movieEntity: PreviewMovieEntity) {

@@ -8,6 +8,9 @@ class FavoritesContract {
 
     interface ViewModel {
         val openMovieDescriptionLiveData: LiveData<Event<PreviewMovieEntity>>
+        val deleteMovieByPositionLiveData: LiveData<Event<Int>>
+        val notifyMovieEntityWasDeletedLiveData: LiveData<Event<PreviewMovieEntity>>
         fun onItemTouched(movieEntity: PreviewMovieEntity)
+        fun onItemLongTouched(movieEntity: PreviewMovieEntity, position: Int)
     }
 }

@@ -1,18 +1,29 @@
 package ru.nikitaartamonov.moviefinder.ui.pages.movies
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import ru.nikitaartamonov.moviefinder.data.ApiConstants
+import ru.nikitaartamonov.moviefinder.data.App
+import ru.nikitaartamonov.moviefinder.data.SHARED_PREFERENCES_MOVIES_TYPE_KEY
 import ru.nikitaartamonov.moviefinder.data.retrofit.ServerMoviesLoaderRetrofit
 import ru.nikitaartamonov.moviefinder.domain.Event
 import ru.nikitaartamonov.moviefinder.domain.MoviesLoaderContract
 import ru.nikitaartamonov.moviefinder.domain.MoviesLoaderContract.MoviesType
 import ru.nikitaartamonov.moviefinder.domain.MoviesRepo
+import ru.nikitaartamonov.moviefinder.domain.PreviewMovieEntity
 
-class MoviesViewModel : ViewModel(), MoviesContract.ViewModel {
+class MoviesViewModel(application: Application) : AndroidViewModel(application),
+    MoviesContract.ViewModel {
+    private val app = application as App
     private val serverMoviesLoader: MoviesLoaderContract.ServerMoviesLoader =
         ServerMoviesLoaderRetrofit()
     private var movies: MoviesRepo? = null
-    private var currentMoviesType = MoviesType.POPULAR
+    private var currentMoviesType = ApiConstants.getMoviesTypeByString(
+        app.sharedPreferences.getString(
+            SHARED_PREFERENCES_MOVIES_TYPE_KEY, ApiConstants.POPULAR_STRING
+        ) ?: ApiConstants.POPULAR_STRING
+    )
 
     private val _moviesLoadedLiveData = MutableLiveData<MoviesRepo>()
     override val moviesLoadedLiveData = _moviesLoadedLiveData
@@ -22,6 +33,8 @@ class MoviesViewModel : ViewModel(), MoviesContract.ViewModel {
     override val changeMoviesButtonTextLiveData = _changeMoviesButtonTextLiveData
     private val _showMoviesTypeMenuLiveData = MutableLiveData<Event<Boolean>>()
     override val showMoviesTypeMenuLiveData = _showMoviesTypeMenuLiveData
+    private val _notifyMovieAddedToFavoritesLiveData = MutableLiveData<Event<String>>()
+    override val notifyMovieAddedToFavoritesLiveData = _notifyMovieAddedToFavoritesLiveData
 
 
     override fun onViewIsReady() {
@@ -44,10 +57,24 @@ class MoviesViewModel : ViewModel(), MoviesContract.ViewModel {
         currentMoviesType = moviesType
         _changeMoviesButtonTextLiveData.postValue(moviesType)
         loadMovies(moviesType)
+        app.sharedPreferences.edit().putString(
+            SHARED_PREFERENCES_MOVIES_TYPE_KEY,
+            ApiConstants.getMoviesTypeString(moviesType)
+        ).apply()
     }
 
     override fun onDownloadErrorSnackbarRetryButtonPressed() {
         loadMovies(currentMoviesType)
+    }
+
+    override fun onMovieItemLongTouched(movieEntity: PreviewMovieEntity) {
+        app.vibrate()
+        addMovieEntityToFavorites(movieEntity)
+    }
+
+    private fun addMovieEntityToFavorites(movieEntity: PreviewMovieEntity) {
+        app.favoritesMoviesRepo.addMovie(movieEntity)
+        _notifyMovieAddedToFavoritesLiveData.postValue(Event(movieEntity.title))
     }
 
     private fun loadMovies(moviesType: MoviesType) {

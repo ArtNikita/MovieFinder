@@ -14,7 +14,6 @@ import ru.nikitaartamonov.moviefinder.databinding.FragmentMoviesBinding
 import ru.nikitaartamonov.moviefinder.domain.MoviesLoaderContract.MoviesType
 import ru.nikitaartamonov.moviefinder.domain.MoviesRepo
 import ru.nikitaartamonov.moviefinder.domain.PreviewMovieEntity
-import ru.nikitaartamonov.moviefinder.impl.MoviesRepoImpl
 import ru.nikitaartamonov.moviefinder.ui.pages.recycler_view.MoviesRecyclerViewAdapter
 import ru.nikitaartamonov.moviefinder.ui.pages.recycler_view.OnMovieItemClickListener
 import ru.nikitaartamonov.moviefinder.util.MyAnalytics
@@ -47,25 +46,30 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
 
     private fun initRecyclerView() {
         binding.moviesFragmentRecyclerView.layoutManager =
-                GridLayoutManager(
-                        context,
-                        when (resources.configuration.orientation) {
-                            Configuration.ORIENTATION_PORTRAIT -> VERTICAL_RECYCLER_VIEW_COLUMNS_COUNT
-                            else -> HORIZONTAL_RECYCLER_VIEW_COLUMNS_COUNT
-                        }
-                )
+            GridLayoutManager(
+                context,
+                when (resources.configuration.orientation) {
+                    Configuration.ORIENTATION_PORTRAIT -> VERTICAL_RECYCLER_VIEW_COLUMNS_COUNT
+                    else -> HORIZONTAL_RECYCLER_VIEW_COLUMNS_COUNT
+                }
+            )
         adapter.listener = object : OnMovieItemClickListener {
             override fun onClick(movieEntity: PreviewMovieEntity) {
                 MyAnalytics.logEvent(requireContext(), "MoviesFragment $movieEntity clicked")
                 //todo
             }
+
+            override fun onLongClick(movieEntity: PreviewMovieEntity, position: Int) {
+                MyAnalytics.logEvent(requireContext(), "MoviesFragment $movieEntity long clicked")
+                viewModel.onMovieItemLongTouched(movieEntity)
+            }
         }
         binding.moviesFragmentRecyclerView.adapter = adapter
-        adapter.setData(MoviesRepoImpl())
+        adapter.setDataAndNotify(emptyList())
     }
 
     private fun setDataToAdapter(moviesRepo: MoviesRepo) {
-        adapter.setData(moviesRepo)
+        adapter.setDataAndNotify(moviesRepo.moviesList)
     }
 
     private fun initViewModel() {
@@ -85,6 +89,20 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
                 showMoviesTypeMenu()
             }
         }
+        viewModel.notifyMovieAddedToFavoritesLiveData.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let { title ->
+                showMovieAddedToFavoritesSnackbar(title)
+            }
+        }
+    }
+
+    private fun showMovieAddedToFavoritesSnackbar(title: String) {
+        val msg = "$title ${getString(R.string.movie_added_to_favorites_message)}"
+        Snackbar.make(
+            binding.moviesFragmentRecyclerView,
+            msg,
+            Snackbar.LENGTH_SHORT
+        ).show()
     }
 
     private fun showMoviesTypeMenu() {
@@ -131,15 +149,13 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
     }
 
     private fun showDownloadError() {
-        Snackbar
-                .make(
-                        binding.moviesFragmentRecyclerView,
-                        getString(R.string.download_error_message),
-                        Snackbar.LENGTH_SHORT
-                ).setAction(getString(R.string.retry)) {
-                    viewModel.onDownloadErrorSnackbarRetryButtonPressed()
-                }
-                .show()
+        Snackbar.make(
+            binding.moviesFragmentRecyclerView,
+            getString(R.string.download_error_message),
+            Snackbar.LENGTH_SHORT
+        ).setAction(getString(R.string.retry)) {
+            viewModel.onDownloadErrorSnackbarRetryButtonPressed()
+        }.show()
     }
 
     override fun onDestroyView() {

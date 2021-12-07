@@ -12,12 +12,12 @@
     </style>
 
     <style name="MovieItemTextView.Name">
-        <item name="android:textSize">@dimen/movie_item_card_view_name_text_view</item>
+        <item name="android:textSize">@dimen/movie_item_card_view_name_text_view_text_size</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_marginTop">@dimen/extra_small_margin_or_padding</item>
     </style>
 
     <style name="MovieItemTextView.Description">
-        <item name="android:textSize">@dimen/movie_item_card_view_description_text_view</item>
+        <item name="android:textSize">@dimen/movie_item_card_view_description_text_view_text_size</item>
     </style>
 </resources>

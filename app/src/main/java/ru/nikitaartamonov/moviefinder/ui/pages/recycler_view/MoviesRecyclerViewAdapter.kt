@@ -2,15 +2,19 @@ package ru.nikitaartamonov.moviefinder.ui.pages.recycler_view
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ru.nikitaartamonov.moviefinder.domain.MoviesRepo
+import ru.nikitaartamonov.moviefinder.domain.PreviewMovieEntity
 
 class MoviesRecyclerViewAdapter : RecyclerView.Adapter<MovieItemViewHolder>() {
-    private lateinit var moviesRepo: MoviesRepo
+    private var moviesList: List<PreviewMovieEntity> = emptyList()
     lateinit var listener: OnMovieItemClickListener
 
-    fun setData(moviesRepo: MoviesRepo) {
-        this.moviesRepo = moviesRepo
+    fun setDataAndNotify(moviesList: List<PreviewMovieEntity>) {
+        this.moviesList = moviesList
         notifyDataSetChanged()
+    }
+
+    fun setData(moviesList: List<PreviewMovieEntity>) {
+        this.moviesList = moviesList
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieItemViewHolder {
@@ -21,7 +25,7 @@ class MoviesRecyclerViewAdapter : RecyclerView.Adapter<MovieItemViewHolder>() {
         holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int = moviesRepo.size
+    override fun getItemCount(): Int = moviesList.size
 
-    private fun getItem(position: Int) = moviesRepo.moviesList[position]
+    private fun getItem(position: Int) = moviesList[position]
 }

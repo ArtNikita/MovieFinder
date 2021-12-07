@@ -4,4 +4,5 @@ import ru.nikitaartamonov.moviefinder.domain.PreviewMovieEntity
 
 interface OnMovieItemClickListener {
     fun onClick(movieEntity: PreviewMovieEntity)
+    fun onLongClick(movieEntity: PreviewMovieEntity, position: Int)
 }
