@@ -18,4 +18,5 @@
     <string name="retry">Retry</string>
     <string name="network_connected_broadcast_receiver_message">Network connected</string>
     <string name="network_disconnected_broadcast_receiver_message">Network disconnected</string>
+    <string name="access_location_permission_explanation">We need location access permission to show you nearest cinema theaters and some other interesting info on the map.</string>
 </resources>

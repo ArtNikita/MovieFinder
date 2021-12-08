@@ -6,9 +6,9 @@ import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import ru.nikitaartamonov.moviefinder.R
 import ru.nikitaartamonov.moviefinder.databinding.ActivityMainBinding
 import ru.nikitaartamonov.moviefinder.ui.pages.favorites.FavoritesFragment
@@ -16,7 +16,7 @@ import ru.nikitaartamonov.moviefinder.ui.pages.movies.MoviesFragment
 import ru.nikitaartamonov.moviefinder.ui.pages.settings.SettingsFragment
 import ru.nikitaartamonov.moviefinder.util.MyAnalytics
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContract.ExplanationDialogActivityLauncher {
 
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainContract.ViewModel by viewModels<MainViewModel>()
@@ -110,8 +110,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showAccessLocationPermissionExplanation() {
-        Toast.makeText(this, "Explanation", Toast.LENGTH_LONG).show()
-        //todo
+        val explanationDialog: DialogFragment =
+            PermissionExplanationDialogFragment.newInstance(MainContract.PERMISSIONS.ACCESS_COARSE_LOCATION.stringValue)
+        explanationDialog.show(supportFragmentManager, PermissionExplanationDialogFragment.TAG)
     }
 
     private fun openMoviesScreen() {
@@ -139,5 +140,11 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         MyAnalytics.logEvent(this, "MainActivity onDestroy")
         unregisterReceiver(networkBroadcastReceiver)
+    }
+
+    override fun onCancelExplanationFragment(permission: String) {
+        viewModel.onPermissionExplanationDialogCanceled(
+            MainContract.getPermissionByStringValue(permission)
+        )
     }
 }

@@ -51,4 +51,8 @@ class MainViewModel : ViewModel(), MainContract.ViewModel {
     override fun requestPermission(permission: MainContract.PERMISSIONS) {
         _requestPermissionLiveData.postValue(Event(permission))
     }
+
+    override fun onPermissionExplanationDialogCanceled(permission: MainContract.PERMISSIONS) {
+        requestPermission(permission)
+    }
 }

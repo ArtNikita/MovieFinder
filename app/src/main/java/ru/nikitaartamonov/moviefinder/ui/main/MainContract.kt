@@ -22,9 +22,21 @@ class MainContract {
         fun onViewIsReady()
         fun showPermissionExplanation(permission: PERMISSIONS)
         fun requestPermission(permission: PERMISSIONS)
+        fun onPermissionExplanationDialogCanceled(permission: PERMISSIONS)
+    }
+
+    interface ExplanationDialogActivityLauncher {
+        fun onCancelExplanationFragment(permission: String)
     }
 
     enum class PERMISSIONS(val stringValue: String, val code: Int) {
         ACCESS_COARSE_LOCATION(Manifest.permission.ACCESS_COARSE_LOCATION, 1212)
+    }
+
+    companion object {
+        fun getPermissionByStringValue(permission: String): PERMISSIONS = when (permission) {
+            PERMISSIONS.ACCESS_COARSE_LOCATION.stringValue -> PERMISSIONS.ACCESS_COARSE_LOCATION
+            else -> throw IllegalStateException("No such permission")
+        }
     }
 }
