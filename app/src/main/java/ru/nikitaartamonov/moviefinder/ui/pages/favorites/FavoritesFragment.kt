@@ -68,7 +68,9 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     }
 
     private fun openMovieDescription(previewMovieEntity: PreviewMovieEntity) {
-        MovieDescriptionActivity.launch(requireContext(), previewMovieEntity)
+        requireActivity().app.favoritesMoviesRepo.getMovie(previewMovieEntity.id){
+            MovieDescriptionActivity.launch(requireContext(), previewMovieEntity, it != null)
+        }
     }
 
     private fun initRecyclerView() {
