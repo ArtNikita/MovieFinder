@@ -2,9 +2,13 @@ package ru.nikitaartamonov.moviefinder.ui.pages.movie_description
 
 import android.content.Intent
 import androidx.lifecycle.ViewModel
+import ru.nikitaartamonov.moviefinder.data.retrofit.ServerMoviesLoaderRetrofit
+import ru.nikitaartamonov.moviefinder.domain.MoviesLoaderContract
 import ru.nikitaartamonov.moviefinder.domain.PreviewMovieEntity
 
 class MovieDescriptionViewModel : ViewModel(), MovieDescriptionContract.ViewModel {
+    private val serverMovieLoader: MoviesLoaderContract.ServerMoviesLoader =
+        ServerMoviesLoaderRetrofit()
     private var activityJustLaunched = true
     private var movieIsFavorite = false
     private lateinit var movieEntity: PreviewMovieEntity

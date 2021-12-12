@@ -12,4 +12,16 @@ interface MoviesApi {
         @Query("api_key") key: String,
         @Query("page") pageNumber: Int
     ): Call<PreviewMovieEntityWrapper>
+
+    @GET("3/movie/{movieId}")
+    fun getDetailedMovieEntity(
+        @Path("movieId") movieId: Long,
+        @Query("api_key") key: String
+    ): Call<DetailedMovieEntity>
+
+    @GET("3/movie/{movieId}/credits")
+    fun getCreditsForMovie(
+        @Path("movieId") movieId: Long,
+        @Query("api_key") key: String
+    ): Call<MovieCreditsWrapper>
 }

@@ -4,6 +4,8 @@ import com.google.gson.Gson
 import org.json.JSONArray
 import org.json.JSONObject
 import ru.nikitaartamonov.moviefinder.data.ApiConstants
+import ru.nikitaartamonov.moviefinder.data.retrofit.CastEntity
+import ru.nikitaartamonov.moviefinder.data.retrofit.DetailedMovieEntity
 import ru.nikitaartamonov.moviefinder.domain.MoviesLoaderContract
 import ru.nikitaartamonov.moviefinder.domain.MoviesRepo
 import ru.nikitaartamonov.moviefinder.domain.PreviewMovieEntity
@@ -36,6 +38,14 @@ class ServerMoviesLoaderImpl : MoviesLoaderContract.ServerMoviesLoader {
                 connection.disconnect()
             }
         }.start()
+    }
+
+    override fun loadDetailedMovieEntityAsync(id: Long, callback: (DetailedMovieEntity?) -> Unit) {
+        //TODO("Not yet implemented")
+    }
+
+    override fun loadMovieCreditsAsync(id: Long, callback: (List<CastEntity>?) -> Unit) {
+        //TODO("Not yet implemented")
     }
 
     private fun getMoviesRepoFromJson(json: String): MoviesRepo {

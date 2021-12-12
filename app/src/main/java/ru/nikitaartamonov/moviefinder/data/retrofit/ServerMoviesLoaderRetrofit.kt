@@ -41,4 +41,50 @@ class ServerMoviesLoaderRetrofit : MoviesLoaderContract.ServerMoviesLoader {
             }
         })
     }
+
+    override fun loadDetailedMovieEntityAsync(
+        id: Long,
+        callback: (DetailedMovieEntity?) -> Unit
+    ) {
+        moviesApi.getDetailedMovieEntity(
+            id,
+            ApiConstants.API_KEY
+        ).enqueue(object : Callback<DetailedMovieEntity> {
+            override fun onResponse(
+                call: Call<DetailedMovieEntity>,
+                response: Response<DetailedMovieEntity>
+            ) {
+                if (response.isSuccessful) {
+                    callback(response.body())
+                } else callback(null)
+            }
+
+            override fun onFailure(call: Call<DetailedMovieEntity>, t: Throwable) {
+                callback(null)
+            }
+        })
+    }
+
+    override fun loadMovieCreditsAsync(
+        id: Long,
+        callback: (List<CastEntity>?) -> Unit
+    ) {
+        moviesApi.getCreditsForMovie(
+            id,
+            ApiConstants.API_KEY
+        ).enqueue(object : Callback<MovieCreditsWrapper>{
+            override fun onResponse(
+                call: Call<MovieCreditsWrapper>,
+                response: Response<MovieCreditsWrapper>
+            ) {
+                if (response.isSuccessful) {
+                    callback(response.body()?.cast)
+                } else callback(null)
+            }
+
+            override fun onFailure(call: Call<MovieCreditsWrapper>, t: Throwable) {
+                callback(null)
+            }
+        })
+    }
 }
