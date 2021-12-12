@@ -20,4 +20,14 @@
     <string name="network_disconnected_broadcast_receiver_message">Network disconnected</string>
     <string name="access_location_permission_explanation">We need location access permission to show you nearest cinema theaters and some other interesting info on the map.</string>
     <string name="internet_problems_message">It seems you have problems with internet. Check your connection.</string>
+    <string name="rating">Rating</string>
+    <string name="release_date">Release date</string>
+    <string name="vote_count">Vote count</string>
+    <string name="runtime">Runtime</string>
+    <string name="production_countries">Prod. countries</string>
+    <string name="genres">Genres</string>
+    <string name="budget">Budget</string>
+    <string name="revenue">Revenue</string>
+    <string name="production_companies">Prod. companies</string>
+    <string name="minutes">mins</string>
 </resources>

@@ -7,8 +7,10 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import ru.nikitaartamonov.moviefinder.R
+import ru.nikitaartamonov.moviefinder.data.ApiConstants
 import ru.nikitaartamonov.moviefinder.databinding.ActivityMovieDescriptionBinding
 import ru.nikitaartamonov.moviefinder.domain.PreviewMovieEntity
 import ru.nikitaartamonov.moviefinder.ui.pages.movie_description.MovieDescriptionContract.Companion.MOVIE_ENTITY_INTENT_KEY
@@ -35,7 +37,24 @@ class MovieDescriptionActivity : AppCompatActivity() {
             it.getContentIfNotHandled()?.let { showInternetProblemsSnackBar() }
         }
         viewModel.setDetailedMovieValuesLiveData.observe(this) {
-            //todo
+            Glide
+                .with(this)
+                .load("${ApiConstants.POSTER_URI_START}${it.backdropPath}")
+                .into(binding.backgroundPosterImageView)
+            binding.titleTextView.text = it.title
+            binding.overviewTextView.text = it.overview
+            binding.voteAverageTextView.text = it.voteAverage.toString()
+            binding.voteCountTextView.text = it.voteCount.toString()
+            binding.releaseDateTextView.text = it.releaseDate
+            val runtimeText = "${it.runtime} ${getString(R.string.minutes)}"
+            binding.runtimeTextView.text = runtimeText
+            binding.productionCountriesTextView.text = "TODO"//todo
+            binding.genresTextView.text = "TODO"//todo
+            val budgetText = "${it.budget}$"//todo covert to readable string
+            binding.budgetTextView.text = budgetText
+            val revenueText = "${it.revenue}$"
+            binding.revenueTextView.text = revenueText
+            binding.productionCompaniesTextView.text = "TODO"//todo
         }
         viewModel.setMovieCastDataValuesLiveData.observe(this) {
             //todo
