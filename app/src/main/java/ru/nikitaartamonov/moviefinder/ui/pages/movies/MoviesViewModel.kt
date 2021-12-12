@@ -2,6 +2,7 @@ package ru.nikitaartamonov.moviefinder.ui.pages.movies
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.nikitaartamonov.moviefinder.data.ApiConstants
 import ru.nikitaartamonov.moviefinder.data.App
@@ -26,15 +27,17 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application),
     )
 
     private val _moviesLoadedLiveData = MutableLiveData<MoviesRepo>()
-    override val moviesLoadedLiveData = _moviesLoadedLiveData
+    override val moviesLoadedLiveData: LiveData<MoviesRepo> = _moviesLoadedLiveData
     private val _showDownloadErrorLiveData = MutableLiveData<Event<Boolean>>()
-    override val showDownloadErrorLiveData = _showDownloadErrorLiveData
+    override val showDownloadErrorLiveData: LiveData<Event<Boolean>> = _showDownloadErrorLiveData
     private val _changeMoviesButtonTextLiveData = MutableLiveData<MoviesType>()
-    override val changeMoviesButtonTextLiveData = _changeMoviesButtonTextLiveData
+    override val changeMoviesButtonTextLiveData: LiveData<MoviesType> =
+        _changeMoviesButtonTextLiveData
     private val _showMoviesTypeMenuLiveData = MutableLiveData<Event<Boolean>>()
-    override val showMoviesTypeMenuLiveData = _showMoviesTypeMenuLiveData
+    override val showMoviesTypeMenuLiveData: LiveData<Event<Boolean>> = _showMoviesTypeMenuLiveData
     private val _notifyMovieAddedToFavoritesLiveData = MutableLiveData<Event<String>>()
-    override val notifyMovieAddedToFavoritesLiveData = _notifyMovieAddedToFavoritesLiveData
+    override val notifyMovieAddedToFavoritesLiveData: LiveData<Event<String>> =
+        _notifyMovieAddedToFavoritesLiveData
 
 
     override fun onViewIsReady() {
