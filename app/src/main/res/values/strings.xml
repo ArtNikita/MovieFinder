@@ -19,4 +19,5 @@
     <string name="network_connected_broadcast_receiver_message">Network connected</string>
     <string name="network_disconnected_broadcast_receiver_message">Network disconnected</string>
     <string name="access_location_permission_explanation">We need location access permission to show you nearest cinema theaters and some other interesting info on the map.</string>
+    <string name="internet_problems_message">It seems you have problems with internet. Check your connection.</string>
 </resources>

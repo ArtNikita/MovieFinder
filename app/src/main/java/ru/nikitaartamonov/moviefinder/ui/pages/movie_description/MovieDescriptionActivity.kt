@@ -7,6 +7,8 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
+import ru.nikitaartamonov.moviefinder.R
 import ru.nikitaartamonov.moviefinder.databinding.ActivityMovieDescriptionBinding
 import ru.nikitaartamonov.moviefinder.domain.PreviewMovieEntity
 import ru.nikitaartamonov.moviefinder.ui.pages.movie_description.MovieDescriptionContract.Companion.MOVIE_ENTITY_INTENT_KEY
@@ -29,7 +31,28 @@ class MovieDescriptionActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        //TODO("Not yet implemented")
+        viewModel.showInternetProblemsLiveData.observe(this) {
+            it.getContentIfNotHandled()?.let { showInternetProblemsSnackBar() }
+        }
+        viewModel.setDetailedMovieValuesLiveData.observe(this) {
+            //todo
+        }
+        viewModel.setMovieCastDataValuesLiveData.observe(this) {
+            //todo
+        }
+    }
+
+    private fun showInternetProblemsSnackBar() {
+        Snackbar.make(
+            this,
+            binding.backgroundPosterImageView,
+            getString(R.string.internet_problems_message),
+            Snackbar.LENGTH_INDEFINITE
+        )
+            .setAction(getString(R.string.retry)) {
+                viewModel.internetProblemsSnackbarRetryButtonPressed()
+            }
+            .show()
     }
 
     private fun hideStatusBar() {
