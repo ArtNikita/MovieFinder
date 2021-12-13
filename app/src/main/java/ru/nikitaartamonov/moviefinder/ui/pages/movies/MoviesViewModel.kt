@@ -38,6 +38,9 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application),
     private val _notifyMovieAddedToFavoritesLiveData = MutableLiveData<Event<String>>()
     override val notifyMovieAddedToFavoritesLiveData: LiveData<Event<String>> =
         _notifyMovieAddedToFavoritesLiveData
+    private val _openMovieDescriptionLiveData = MutableLiveData<Event<PreviewMovieEntity>>()
+    override val openMovieDescriptionLiveData: LiveData<Event<PreviewMovieEntity>> =
+        _openMovieDescriptionLiveData
 
 
     override fun onViewIsReady() {
@@ -73,6 +76,14 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application),
     override fun onMovieItemLongTouched(movieEntity: PreviewMovieEntity) {
         app.vibrate()
         addMovieEntityToFavorites(movieEntity)
+    }
+
+    override fun onMovieItemTouched(movieEntity: PreviewMovieEntity) {
+        openMoviePage(movieEntity)
+    }
+
+    private fun openMoviePage(movieEntity: PreviewMovieEntity) {
+        _openMovieDescriptionLiveData.postValue(Event(movieEntity))
     }
 
     private fun addMovieEntityToFavorites(movieEntity: PreviewMovieEntity) {
