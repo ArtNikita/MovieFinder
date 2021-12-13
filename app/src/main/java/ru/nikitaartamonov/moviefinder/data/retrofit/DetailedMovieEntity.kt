@@ -44,22 +44,58 @@ data class DetailedMovieEntity(
 
     @SerializedName("vote_count")
     val voteCount: Long
-){
+) {
     data class GenreWrapper(
         @SerializedName("id")
         val id: Long,
         @SerializedName("name")
-        val name: String)
+        val name: String
+    ) {
+        companion object {
+            fun genresToText(genres: List<GenreWrapper>): String {
+                val sb = StringBuilder()
+                genres.forEachIndexed() { index, genreEntity ->
+                    sb.append(genreEntity.name)
+                    if (index != genres.size - 1) sb.append(", ")
+                }
+                return sb.toString()
+            }
+        }
+    }
+
     data class ProductionCompanyWrapper(
         @SerializedName("name")
         val name: String,
         @SerializedName("origin_country")
         val originCountry: String
-    )
+    ){
+        companion object {
+            fun productionCompaniesToText(productionCompanies: List<ProductionCompanyWrapper>): String {
+                val sb = StringBuilder()
+                productionCompanies.forEachIndexed() { index, companyEntity ->
+                    sb.append("${companyEntity.name} (${companyEntity.originCountry})")
+                    if (index != productionCompanies.size - 1) sb.append(", ")
+                }
+                return sb.toString()
+            }
+        }
+    }
+
     data class ProductionCountryWrapper(
         @SerializedName("iso_3166_1")
         val shortName: String,
         @SerializedName("name")
         val name: String
-    )
+    ) {
+        companion object {
+            fun productionCountriesToText(productionCountries: List<ProductionCountryWrapper>): String {
+                val sb = StringBuilder()
+                productionCountries.forEachIndexed() { index, countryEntity ->
+                    sb.append("${countryEntity.name} (${countryEntity.shortName})")
+                    if (index != productionCountries.size - 1) sb.append(", ")
+                }
+                return sb.toString()
+            }
+        }
+    }
 }

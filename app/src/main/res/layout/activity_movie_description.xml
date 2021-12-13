@@ -22,6 +22,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/background_poster_image_view"
                 android:layout_width="match_parent"
@@ -66,7 +71,6 @@
             production_companies_title_text_view" />
 
 
-
         <TextView
             android:id="@+id/vote_average_title_text_view"
             android:layout_width="0dp"
@@ -85,7 +89,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/barrierVertical"
             app:layout_constraintTop_toTopOf="@id/vote_average_title_text_view" />
-
 
 
         <TextView
@@ -108,7 +111,6 @@
             app:layout_constraintTop_toTopOf="@id/vote_count_title_text_view" />
 
 
-
         <TextView
             android:id="@+id/release_date_title_text_view"
             android:layout_width="wrap_content"
@@ -127,7 +129,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/barrierVertical"
             app:layout_constraintTop_toTopOf="@id/release_date_title_text_view" />
-
 
 
         <TextView
@@ -150,7 +151,6 @@
             app:layout_constraintTop_toTopOf="@id/runtime_title_text_view" />
 
 
-
         <TextView
             android:id="@+id/production_countries_title_text_view"
             android:layout_width="wrap_content"
@@ -169,7 +169,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/barrierVertical"
             app:layout_constraintTop_toTopOf="@id/production_countries_title_text_view" />
-
 
 
         <TextView
@@ -192,7 +191,6 @@
             app:layout_constraintTop_toTopOf="@id/genres_title_text_view" />
 
 
-
         <TextView
             android:id="@+id/budget_title_text_view"
             android:layout_width="wrap_content"
@@ -211,7 +209,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/barrierVertical"
             app:layout_constraintTop_toTopOf="@id/budget_title_text_view" />
-
 
 
         <TextView
@@ -234,7 +231,6 @@
             app:layout_constraintTop_toTopOf="@id/revenue_title_text_view" />
 
 
-
         <TextView
             android:id="@+id/production_companies_title_text_view"
             android:layout_width="wrap_content"
@@ -253,6 +249,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/barrierVertical"
             app:layout_constraintTop_toTopOf="@id/production_companies_title_text_view" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cast_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/big_margin_or_padding"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/production_companies_text_view" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
