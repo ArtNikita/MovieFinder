@@ -8,4 +8,5 @@
     <dimen name="normal_margin_or_padding">16dp</dimen>
     <dimen name="big_margin_or_padding">32dp</dimen>
     <dimen name="description_activity_poster_gradient_height">32dp</dimen>
+    <dimen name="like_toggle_button_size">40dp</dimen>
 </resources>

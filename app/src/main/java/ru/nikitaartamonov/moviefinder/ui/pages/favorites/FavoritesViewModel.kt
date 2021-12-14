@@ -20,6 +20,9 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
     private val _notifyMovieEntityWasDeletedLiveData = MutableLiveData<Event<PreviewMovieEntity>>()
     override val notifyMovieEntityWasDeletedLiveData: LiveData<Event<PreviewMovieEntity>> =
         _notifyMovieEntityWasDeletedLiveData
+    private val _notifyMoviesRepoChangedLiveData = MutableLiveData<Event<Boolean>>()
+    override val notifyMoviesRepoChangedLiveData: LiveData<Event<Boolean>> =
+        _notifyMoviesRepoChangedLiveData
 
     override fun onItemTouched(movieEntity: PreviewMovieEntity) {
         openMoviePage(movieEntity)
@@ -37,5 +40,11 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
 
     private fun openMoviePage(movieEntity: PreviewMovieEntity) {
         _openMovieDescriptionLiveData.postValue(Event(movieEntity))
+    }
+
+    override fun onFragmentResume(currentSize: Int) {
+        app.favoritesMoviesRepo.getSize {
+            if (it != currentSize) _notifyMoviesRepoChangedLiveData.postValue(Event(true))
+        }
     }
 }

@@ -3,6 +3,7 @@ package ru.nikitaartamonov.moviefinder.ui.pages.favorites
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -56,6 +57,15 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
                 notifyMovieEntityWasDeleted(movieEntity)
             }
         }
+        viewModel.notifyMoviesRepoChangedLiveData.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let {
+                requireActivity().app.favoritesMoviesRepo.getMoviesList {
+                    requireActivity().runOnUiThread {
+                        adapter.setDataAndNotify(it)
+                    }
+                }
+            }
+        }
     }
 
     private fun notifyMovieEntityWasDeleted(movieEntity: PreviewMovieEntity) {
@@ -98,6 +108,11 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
         requireActivity().app.favoritesMoviesRepo.getMoviesList {
             requireActivity().runOnUiThread { adapter.setDataAndNotify(it) }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.onFragmentResume(adapter.listSize)
     }
 
     override fun onDestroyView() {

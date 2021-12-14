@@ -10,7 +10,9 @@ class FavoritesContract {
         val openMovieDescriptionLiveData: LiveData<Event<PreviewMovieEntity>>
         val deleteMovieByPositionLiveData: LiveData<Event<Int>>
         val notifyMovieEntityWasDeletedLiveData: LiveData<Event<PreviewMovieEntity>>
+        val notifyMoviesRepoChangedLiveData: LiveData<Event<Boolean>>
         fun onItemTouched(movieEntity: PreviewMovieEntity)
         fun onItemLongTouched(movieEntity: PreviewMovieEntity, position: Int)
+        fun onFragmentResume(currentSize: Int)
     }
 }

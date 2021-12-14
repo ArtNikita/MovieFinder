@@ -10,10 +10,12 @@ class MovieDescriptionContract {
     interface ViewModel {
         fun onActivityIsReady(inputIntent: Intent)
         fun internetProblemsSnackbarRetryButtonPressed()
+        fun likeToggleButtonPressed(state: Boolean)
 
         val showInternetProblemsLiveData: LiveData<Event<Boolean>>
         val setDetailedMovieValuesLiveData: LiveData<DetailedMovieEntity>
         val setMovieCastDataValuesLiveData: LiveData<List<CastEntity>>
+        val movieIsFavoriteLiveData: LiveData<Boolean>
     }
 
     companion object {

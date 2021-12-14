@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
+import android.widget.ToggleButton
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -37,12 +38,20 @@ class MovieDescriptionActivity : AppCompatActivity() {
         setContentView(binding.root)
         initViewModel()
         initRecyclerView()
+        initClickListeners()
         viewModel.onActivityIsReady(intent)
+    }
+
+    private fun initClickListeners() {
+        binding.likeToggleButton.setOnClickListener { viewModel.likeToggleButtonPressed((it as ToggleButton).isChecked) }
     }
 
     private fun initViewModel() {
         viewModel.showInternetProblemsLiveData.observe(this) {
             it.getContentIfNotHandled()?.let { showInternetProblemsSnackBar() }
+        }
+        viewModel.movieIsFavoriteLiveData.observe(this) {
+            binding.likeToggleButton.isChecked = it
         }
         viewModel.setDetailedMovieValuesLiveData.observe(this) {
             Glide

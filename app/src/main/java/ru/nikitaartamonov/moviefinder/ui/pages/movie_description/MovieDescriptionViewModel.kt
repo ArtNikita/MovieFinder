@@ -1,9 +1,11 @@
 package ru.nikitaartamonov.moviefinder.ui.pages.movie_description
 
+import android.app.Application
 import android.content.Intent
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import ru.nikitaartamonov.moviefinder.data.App
 import ru.nikitaartamonov.moviefinder.data.retrofit.CastEntity
 import ru.nikitaartamonov.moviefinder.data.retrofit.DetailedMovieEntity
 import ru.nikitaartamonov.moviefinder.data.retrofit.ServerMoviesLoaderRetrofit
@@ -11,7 +13,9 @@ import ru.nikitaartamonov.moviefinder.domain.Event
 import ru.nikitaartamonov.moviefinder.domain.MoviesLoaderContract
 import ru.nikitaartamonov.moviefinder.domain.PreviewMovieEntity
 
-class MovieDescriptionViewModel : ViewModel(), MovieDescriptionContract.ViewModel {
+class MovieDescriptionViewModel(application: Application) : AndroidViewModel(application),
+    MovieDescriptionContract.ViewModel {
+    private val app = application as App
     private val serverMovieLoader: MoviesLoaderContract.ServerMoviesLoader =
         ServerMoviesLoaderRetrofit()
     private var activityJustLaunched = true
@@ -35,6 +39,8 @@ class MovieDescriptionViewModel : ViewModel(), MovieDescriptionContract.ViewMode
     private val _setMovieCastDataValuesLiveData = MutableLiveData<List<CastEntity>>()
     override val setMovieCastDataValuesLiveData: LiveData<List<CastEntity>> =
         _setMovieCastDataValuesLiveData
+    private val _movieIsFavoriteLiveData = MutableLiveData<Boolean>()
+    override val movieIsFavoriteLiveData: LiveData<Boolean> = _movieIsFavoriteLiveData
 
     override fun onActivityIsReady(inputIntent: Intent) {
         if (activityJustLaunched) {
@@ -53,6 +59,7 @@ class MovieDescriptionViewModel : ViewModel(), MovieDescriptionContract.ViewMode
         if (movieCastListLoaded) {
             _setMovieCastDataValuesLiveData.postValue(castList)
         }
+        _movieIsFavoriteLiveData.postValue(movieIsFavorite)
     }
 
     override fun internetProblemsSnackbarRetryButtonPressed() {
@@ -61,6 +68,19 @@ class MovieDescriptionViewModel : ViewModel(), MovieDescriptionContract.ViewMode
         }
         if (!movieCastListLoaded) {
             loadMovieCastList()
+        }
+    }
+
+    override fun likeToggleButtonPressed(state: Boolean) {
+        movieIsFavorite = state
+        updateDataBase(state)
+    }
+
+    private fun updateDataBase(state: Boolean){
+        if (state) {
+            app.favoritesMoviesRepo.addMovie(movieEntity)
+        } else {
+            app.favoritesMoviesRepo.deleteMovie(movieEntity.id){}
         }
     }
 
