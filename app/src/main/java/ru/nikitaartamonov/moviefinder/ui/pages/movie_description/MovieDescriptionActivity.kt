@@ -3,6 +3,7 @@ package ru.nikitaartamonov.moviefinder.ui.pages.movie_description
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
@@ -14,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import ru.nikitaartamonov.moviefinder.R
 import ru.nikitaartamonov.moviefinder.data.ApiConstants
+import ru.nikitaartamonov.moviefinder.data.retrofit.DetailedMovieEntity
 import ru.nikitaartamonov.moviefinder.data.retrofit.DetailedMovieEntity.GenreWrapper.Companion.genresToText
 import ru.nikitaartamonov.moviefinder.data.retrofit.DetailedMovieEntity.ProductionCompanyWrapper.Companion.productionCompaniesToText
 import ru.nikitaartamonov.moviefinder.data.retrofit.DetailedMovieEntity.ProductionCountryWrapper.Companion.productionCountriesToText
@@ -21,6 +23,7 @@ import ru.nikitaartamonov.moviefinder.databinding.ActivityMovieDescriptionBindin
 import ru.nikitaartamonov.moviefinder.domain.PreviewMovieEntity
 import ru.nikitaartamonov.moviefinder.ui.pages.movie_description.MovieDescriptionContract.Companion.MOVIE_ENTITY_INTENT_KEY
 import ru.nikitaartamonov.moviefinder.ui.pages.movie_description.MovieDescriptionContract.Companion.MOVIE_ENTITY_IS_FAVORITE_INTENT_KEY
+import ru.nikitaartamonov.moviefinder.ui.pages.movie_description.map.MapsActivity
 import ru.nikitaartamonov.moviefinder.ui.pages.recycler_view.description.CastRecyclerViewAdapter
 import ru.nikitaartamonov.moviefinder.util.MyAnalytics
 
@@ -44,6 +47,9 @@ class MovieDescriptionActivity : AppCompatActivity() {
 
     private fun initClickListeners() {
         binding.likeToggleButton.setOnClickListener { viewModel.likeToggleButtonPressed((it as ToggleButton).isChecked) }
+        binding.productionCountriesTextView.setOnClickListener {
+            viewModel.productionCountriesClicked()
+        }
     }
 
     private fun initViewModel() {
@@ -54,30 +60,40 @@ class MovieDescriptionActivity : AppCompatActivity() {
             binding.likeToggleButton.isChecked = it
         }
         viewModel.setDetailedMovieValuesLiveData.observe(this) {
-            Glide
-                .with(this)
-                .load("${ApiConstants.POSTER_URI_START}${it.backdropPath}")
-                .into(binding.backgroundPosterImageView)
-            binding.titleTextView.text = it.title
-            binding.overviewTextView.text = it.overview
-            binding.voteAverageTextView.text = it.voteAverage.toString()
-            binding.voteCountTextView.text = it.voteCount.toString()
-            binding.releaseDateTextView.text = it.releaseDate
-            val runtimeText = "${it.runtime} ${getString(R.string.minutes)}"
-            binding.runtimeTextView.text = runtimeText
-            binding.productionCountriesTextView.text =
-                productionCountriesToText(it.productionCountries)
-            binding.genresTextView.text = genresToText(it.genres)
-            val budgetText = "${it.budget}$"
-            binding.budgetTextView.text = budgetText
-            val revenueText = "${it.revenue}$"
-            binding.revenueTextView.text = revenueText
-            binding.productionCompaniesTextView.text =
-                productionCompaniesToText(it.productionCompanies)
+            setDetailedMovieValues(it)
         }
         viewModel.setMovieCastDataValuesLiveData.observe(this) {
             adapter.setDataAndNotify(it)
         }
+        viewModel.openMapLiveData.observe(this) {
+            it.getContentIfNotHandled()
+                ?.let { countriesList -> MapsActivity.launch(this, countriesList) }
+        }
+    }
+
+    private fun setDetailedMovieValues(detailedMovieEntity: DetailedMovieEntity) {
+        Glide
+            .with(this)
+            .load("${ApiConstants.POSTER_URI_START}${detailedMovieEntity.backdropPath}")
+            .into(binding.backgroundPosterImageView)
+        binding.titleTextView.text = detailedMovieEntity.title
+        binding.overviewTextView.text = detailedMovieEntity.overview
+        binding.voteAverageTextView.text = detailedMovieEntity.voteAverage.toString()
+        binding.voteCountTextView.text = detailedMovieEntity.voteCount.toString()
+        binding.releaseDateTextView.text = detailedMovieEntity.releaseDate
+        val runtimeText = "${detailedMovieEntity.runtime} ${getString(R.string.minutes)}"
+        binding.runtimeTextView.text = runtimeText
+        binding.productionCountriesTextView.text =
+            productionCountriesToText(detailedMovieEntity.productionCountries)
+        binding.productionCountriesTextView.paintFlags =
+            binding.productionCountriesTextView.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        binding.genresTextView.text = genresToText(detailedMovieEntity.genres)
+        val budgetText = "${detailedMovieEntity.budget}$"
+        binding.budgetTextView.text = budgetText
+        val revenueText = "${detailedMovieEntity.revenue}$"
+        binding.revenueTextView.text = revenueText
+        binding.productionCompaniesTextView.text =
+            productionCompaniesToText(detailedMovieEntity.productionCompanies)
     }
 
     private fun initRecyclerView() {

@@ -41,6 +41,8 @@ class MovieDescriptionViewModel(application: Application) : AndroidViewModel(app
         _setMovieCastDataValuesLiveData
     private val _movieIsFavoriteLiveData = MutableLiveData<Boolean>()
     override val movieIsFavoriteLiveData: LiveData<Boolean> = _movieIsFavoriteLiveData
+    private val _openMapLiveData = MutableLiveData<Event<ArrayList<String>>>()
+    override val openMapLiveData: LiveData<Event<ArrayList<String>>> = _openMapLiveData
 
     override fun onActivityIsReady(inputIntent: Intent) {
         if (activityJustLaunched) {
@@ -114,5 +116,17 @@ class MovieDescriptionViewModel(application: Application) : AndroidViewModel(app
         )
         inputIntent.getParcelableExtra<PreviewMovieEntity>(MovieDescriptionContract.MOVIE_ENTITY_INTENT_KEY)
             ?.let { movieEntity = it }
+    }
+
+    override fun productionCountriesClicked() {
+        showMap()
+    }
+
+    private fun showMap() {
+        val countriesList = arrayListOf<String>()
+        detailedMovieEntity.productionCountries.forEach {
+            countriesList.add(it.name)
+        }
+        _openMapLiveData.postValue(Event(countriesList))
     }
 }

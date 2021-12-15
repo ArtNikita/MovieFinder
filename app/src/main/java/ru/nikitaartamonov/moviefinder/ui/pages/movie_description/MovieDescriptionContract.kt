@@ -11,11 +11,13 @@ class MovieDescriptionContract {
         fun onActivityIsReady(inputIntent: Intent)
         fun internetProblemsSnackbarRetryButtonPressed()
         fun likeToggleButtonPressed(state: Boolean)
+        fun productionCountriesClicked()
 
         val showInternetProblemsLiveData: LiveData<Event<Boolean>>
         val setDetailedMovieValuesLiveData: LiveData<DetailedMovieEntity>
         val setMovieCastDataValuesLiveData: LiveData<List<CastEntity>>
         val movieIsFavoriteLiveData: LiveData<Boolean>
+        val openMapLiveData: LiveData<Event<ArrayList<String>>>
     }
 
     companion object {
