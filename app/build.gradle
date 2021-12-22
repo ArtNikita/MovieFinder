@@ -17,9 +17,21 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file("apikey.properties").newDataInputStream())
+        def movieDbApiKey = properties.getProperty("the_movie_db_api_key", "")
+        buildConfigField "String", "MOVIE_DB_API_KEY", movieDbApiKey
+        def googleMapsApiKey = properties.getProperty("google_maps_api_key", "")
+        resValue "string", "GOOGLE_MAPS_API_KEY", googleMapsApiKey
     }
 
     buildTypes {
+        beta {
+            initWith debug
+            versionNameSuffix '-beta'
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
