@@ -1,11 +1,12 @@
 package ru.nikitaartamonov.moviefinder.data
 
+import ru.nikitaartamonov.moviefinder.BuildConfig
 import ru.nikitaartamonov.moviefinder.domain.MoviesLoaderContract
 import java.net.URL
 
 class ApiConstants {
     companion object {
-        const val API_KEY: String = "0f798718b00910d0a11e67966b508e93"
+        const val API_KEY: String = BuildConfig.MOVIE_DB_API_KEY
         const val POSTER_URI_START = "https://image.tmdb.org/t/p/w1280/"
         const val BASE_URL = "https://api.themoviedb.org/"
         const val DEFAULT_PAGE_NUMBER = 1
