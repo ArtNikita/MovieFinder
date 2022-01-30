@@ -31,4 +31,6 @@
     <string name="production_companies">Prod. companies</string>
     <string name="minutes">mins</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="firebase_channel_name">Important notify messages</string>
+    <string name="firebase_channel_description">Rare important notifications</string>
 </resources>
