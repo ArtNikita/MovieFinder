@@ -1,3 +1,36 @@
 <resources>
     <string name="app_name">Movie Finder</string>
+    <string name="movies_menu_title">Movies</string>
+    <string name="favorites_menu_title">Favorites</string>
+    <string name="settings_menu_title">Settings</string>
+    <string name="movie_item_image_view_content_description">Poster</string>
+    <string name="settings_fragment_text_view_plug">Settings fragment</string>
+    <string name="default_movie_poster_ratio">27:40</string>
+    <string name="imdb">IMDB</string>
+    <string name="kinopoisk">KP</string>
+    <string name="popular_movies_title">Popular</string>
+    <string name="now_playing_movies_title">Now playing</string>
+    <string name="upcoming_movies_title">Upcoming</string>
+    <string name="top_rated_movies_title">Top rated</string>
+    <string name="download_error_message">Check your internet please.</string>
+    <string name="movie_added_to_favorites_message">movie added to favorites.</string>
+    <string name="movie_removed_from_favorites_message">movie removed from favorites.</string>
+    <string name="retry">Retry</string>
+    <string name="network_connected_broadcast_receiver_message">Network connected</string>
+    <string name="network_disconnected_broadcast_receiver_message">Network disconnected</string>
+    <string name="access_location_permission_explanation">We need location access permission to show you nearest cinema theaters and some other interesting info on the map.</string>
+    <string name="internet_problems_message">It seems you have problems with internet. Check your connection.</string>
+    <string name="rating">Rating</string>
+    <string name="release_date">Release date</string>
+    <string name="vote_count">Vote count</string>
+    <string name="runtime">Runtime</string>
+    <string name="production_countries">Prod. countries</string>
+    <string name="genres">Genres</string>
+    <string name="budget">Budget</string>
+    <string name="revenue">Revenue</string>
+    <string name="production_companies">Prod. companies</string>
+    <string name="minutes">mins</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="firebase_channel_name">Important notify messages</string>
+    <string name="firebase_channel_description">Rare important notifications</string>
 </resources>

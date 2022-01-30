@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="card_view_corner_radius">8dp</dimen>
+    <dimen name="extra_small_margin_or_padding">4dp</dimen>
+    <dimen name="movie_item_card_view_name_text_view_text_size">14sp</dimen>
+    <dimen name="movie_item_card_view_description_text_view_text_size">14sp</dimen>
+    <dimen name="movies_type_button_text_size">16sp</dimen>
+    <dimen name="normal_margin_or_padding">16dp</dimen>
+    <dimen name="big_margin_or_padding">32dp</dimen>
+    <dimen name="description_activity_poster_gradient_height">32dp</dimen>
+    <dimen name="like_toggle_button_size">40dp</dimen>
+</resources>
