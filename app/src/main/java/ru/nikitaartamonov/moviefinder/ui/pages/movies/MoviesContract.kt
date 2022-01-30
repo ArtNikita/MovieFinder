@@ -14,11 +14,13 @@ class MoviesContract {
         val changeMoviesButtonTextLiveData: LiveData<MoviesLoaderContract.MoviesType>
         val showMoviesTypeMenuLiveData: LiveData<Event<Boolean>>
         val notifyMovieAddedToFavoritesLiveData: LiveData<Event<String>>
+        val openMovieDescriptionLiveData: LiveData<Event<PreviewMovieEntity>>
 
         fun onViewIsReady()
         fun onMoviesTypeButtonPressed()
         fun onMoviesTypeMenuButtonPressed(moviesType: MoviesLoaderContract.MoviesType)
         fun onDownloadErrorSnackbarRetryButtonPressed()
         fun onMovieItemLongTouched(movieEntity: PreviewMovieEntity)
+        fun onMovieItemTouched(movieEntity: PreviewMovieEntity)
     }
 }

@@ -10,10 +10,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import ru.nikitaartamonov.moviefinder.R
+import ru.nikitaartamonov.moviefinder.data.app
 import ru.nikitaartamonov.moviefinder.databinding.FragmentMoviesBinding
 import ru.nikitaartamonov.moviefinder.domain.MoviesLoaderContract.MoviesType
 import ru.nikitaartamonov.moviefinder.domain.MoviesRepo
 import ru.nikitaartamonov.moviefinder.domain.PreviewMovieEntity
+import ru.nikitaartamonov.moviefinder.ui.pages.movie_description.MovieDescriptionActivity
 import ru.nikitaartamonov.moviefinder.ui.pages.recycler_view.MoviesRecyclerViewAdapter
 import ru.nikitaartamonov.moviefinder.ui.pages.recycler_view.OnMovieItemClickListener
 import ru.nikitaartamonov.moviefinder.util.MyAnalytics
@@ -56,7 +58,7 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
         adapter.listener = object : OnMovieItemClickListener {
             override fun onClick(movieEntity: PreviewMovieEntity) {
                 MyAnalytics.logEvent(requireContext(), "MoviesFragment $movieEntity clicked")
-                //todo
+                viewModel.onMovieItemTouched(movieEntity)
             }
 
             override fun onLongClick(movieEntity: PreviewMovieEntity, position: Int) {
@@ -93,6 +95,17 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
             event.getContentIfNotHandled()?.let { title ->
                 showMovieAddedToFavoritesSnackbar(title)
             }
+        }
+        viewModel.openMovieDescriptionLiveData.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let { movieEntity ->
+                openMovieDescription(movieEntity)
+            }
+        }
+    }
+
+    private fun openMovieDescription(previewMovieEntity: PreviewMovieEntity) {
+        requireActivity().app.favoritesMoviesRepo.getMovie(previewMovieEntity.id){
+            MovieDescriptionActivity.launch(requireContext(), previewMovieEntity, it != null)
         }
     }
 

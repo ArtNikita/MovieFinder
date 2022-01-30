@@ -1,9 +1,280 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
+    android:theme="@style/DescriptionActivity"
     tools:context=".ui.pages.movie_description.MovieDescriptionActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/big_margin_or_padding">
+
+        <FrameLayout
+            android:id="@+id/background_poster_frame_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/background_poster_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/description_activity_poster_gradient_height"
+                android:layout_gravity="bottom"
+                android:background="@drawable/custom_gradient_button" />
+        </FrameLayout>
+
+
+        <TextView
+            android:id="@+id/title_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/big_margin_or_padding"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/like_toggle_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/background_poster_frame_layout" />
+
+        <ToggleButton
+            android:id="@+id/like_toggle_button"
+            android:layout_width="@dimen/like_toggle_button_size"
+            android:layout_height="@dimen/like_toggle_button_size"
+            android:layout_margin="@dimen/big_margin_or_padding"
+            android:background="@drawable/like_button_toggle_selector"
+            android:textOff=""
+            android:textOn=""
+            app:layout_constraintBottom_toTopOf="@id/overview_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/title_text_view"
+            app:layout_constraintTop_toBottomOf="@id/background_poster_frame_layout" />
+
+        <TextView
+            android:id="@+id/overview_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/big_margin_or_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_text_view" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrierVertical"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:barrierDirection="right"
+            app:constraint_referenced_ids="vote_average_title_text_view, vote_count_title_text_view,
+            release_date_title_text_view, runtime_title_text_view, production_countries_title_text_view,
+            genres_title_text_view, budget_title_text_view, revenue_title_text_view,
+            production_companies_title_text_view" />
+
+
+        <TextView
+            android:id="@+id/vote_average_title_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/big_margin_or_padding"
+            android:text="@string/rating"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/overview_text_view" />
+
+        <TextView
+            android:id="@+id/vote_average_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/normal_margin_or_padding"
+            android:layout_marginEnd="@dimen/big_margin_or_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/barrierVertical"
+            app:layout_constraintTop_toTopOf="@id/vote_average_title_text_view" />
+
+
+        <TextView
+            android:id="@+id/vote_count_title_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/big_margin_or_padding"
+            android:text="@string/vote_count"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vote_average_text_view" />
+
+        <TextView
+            android:id="@+id/vote_count_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/normal_margin_or_padding"
+            android:layout_marginEnd="@dimen/big_margin_or_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/barrierVertical"
+            app:layout_constraintTop_toTopOf="@id/vote_count_title_text_view" />
+
+
+        <TextView
+            android:id="@+id/release_date_title_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/big_margin_or_padding"
+            android:text="@string/release_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vote_count_text_view" />
+
+        <TextView
+            android:id="@+id/release_date_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/normal_margin_or_padding"
+            android:layout_marginEnd="@dimen/big_margin_or_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/barrierVertical"
+            app:layout_constraintTop_toTopOf="@id/release_date_title_text_view" />
+
+
+        <TextView
+            android:id="@+id/runtime_title_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/big_margin_or_padding"
+            android:text="@string/runtime"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/release_date_text_view" />
+
+        <TextView
+            android:id="@+id/runtime_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/normal_margin_or_padding"
+            android:layout_marginEnd="@dimen/big_margin_or_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/barrierVertical"
+            app:layout_constraintTop_toTopOf="@id/runtime_title_text_view" />
+
+
+        <TextView
+            android:id="@+id/production_countries_title_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/big_margin_or_padding"
+            android:text="@string/production_countries"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/runtime_text_view" />
+
+        <TextView
+            android:id="@+id/production_countries_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/normal_margin_or_padding"
+            android:layout_marginEnd="@dimen/big_margin_or_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/barrierVertical"
+            app:layout_constraintTop_toTopOf="@id/production_countries_title_text_view" />
+
+
+        <TextView
+            android:id="@+id/genres_title_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/big_margin_or_padding"
+            android:text="@string/genres"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/production_countries_text_view" />
+
+        <TextView
+            android:id="@+id/genres_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/normal_margin_or_padding"
+            android:layout_marginEnd="@dimen/big_margin_or_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/barrierVertical"
+            app:layout_constraintTop_toTopOf="@id/genres_title_text_view" />
+
+
+        <TextView
+            android:id="@+id/budget_title_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/big_margin_or_padding"
+            android:text="@string/budget"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/genres_text_view" />
+
+        <TextView
+            android:id="@+id/budget_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/normal_margin_or_padding"
+            android:layout_marginEnd="@dimen/big_margin_or_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/barrierVertical"
+            app:layout_constraintTop_toTopOf="@id/budget_title_text_view" />
+
+
+        <TextView
+            android:id="@+id/revenue_title_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/big_margin_or_padding"
+            android:text="@string/revenue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/budget_text_view" />
+
+        <TextView
+            android:id="@+id/revenue_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/normal_margin_or_padding"
+            android:layout_marginEnd="@dimen/big_margin_or_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/barrierVertical"
+            app:layout_constraintTop_toTopOf="@id/revenue_title_text_view" />
+
+
+        <TextView
+            android:id="@+id/production_companies_title_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/big_margin_or_padding"
+            android:text="@string/production_companies"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/revenue_text_view" />
+
+        <TextView
+            android:id="@+id/production_companies_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/normal_margin_or_padding"
+            android:layout_marginEnd="@dimen/big_margin_or_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/barrierVertical"
+            app:layout_constraintTop_toTopOf="@id/production_companies_title_text_view" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cast_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/big_margin_or_padding"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/production_companies_text_view" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

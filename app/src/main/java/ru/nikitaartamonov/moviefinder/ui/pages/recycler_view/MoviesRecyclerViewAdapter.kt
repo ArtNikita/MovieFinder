@@ -8,6 +8,8 @@ class MoviesRecyclerViewAdapter : RecyclerView.Adapter<MovieItemViewHolder>() {
     private var moviesList: List<PreviewMovieEntity> = emptyList()
     lateinit var listener: OnMovieItemClickListener
 
+    val listSize = moviesList.size
+
     fun setDataAndNotify(moviesList: List<PreviewMovieEntity>) {
         this.moviesList = moviesList
         notifyDataSetChanged()
